@@ -3,8 +3,8 @@
 #### List of Experiments
 
 - Write a program that uses functions to perform the following operations on singly linked list
-	- Creation
-	- Insertion
+	- Creation [View Code](https://github.com/Harshrb2424/program-examples/blob/main/resources/DS/DS1.c)
+	- Insertion [View Code](./resources/DS/DS2.c)
 	- Deletion
 	- Traversal
 
@@ -49,7 +49,7 @@
 - Implement a Pattern matching algorithms using Boyer- Moore, Knuth-Morris-Pratt
 
 
- [DS U1 PDF](https://harshrb2424.github.io/Jntuh-R22-Notes/public/resources/2nd%20Year/DS-Unit1.pdf)
+ 
 
 ## (OSL) Operating Systems Lab
 
