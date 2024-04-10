@@ -103,7 +103,55 @@ X = monkey,
 Y = chair.
 ```
 
-4. Write a program in Turbo Prolog for medical diagnosis and show the advantages and disadvantages of green and red cuts.
+## 4. Write a program in Turbo Prolog for medical diagnosis and show the advantages and disadvantages of green and red cuts.
+
+### Source Code: `ex4.pl`
+
+```pl
+run :-
+    write('Do you have HEADACHE?'),
+    read(HA),
+    write('Do you have TEMPERATURE?'),
+    read(TP),
+    write('Do you have a SORE THROAT?'),
+    read(ST),
+    write('Are you feeling TIRED?'),
+    read(TR),
+    disease(HA, TP, ST, TR).
+
+
+disease(y,y,y,y):-write('You are suffering from VIRAL FEVER').
+disease(y,y,y,n):-write('You are suffering from COMMON FEVER').
+disease(y,y,n,y):-write('You are suffering from VIRAL FEVER').
+disease(y,y,n,n):-write('You maybe OVERHOOKED').
+disease(y,n,y,y):-write('You are suffering from COLD').
+disease(y,n,y,n):-write('You might develop THROAT INFECTION').
+disease(y,n,n,y):-write('You might have SEDENTARY for a long spell').
+disease(y,n,n,n):-write('You are suffering from HEADACHE').
+disease(n,y,y,y):-write('You are suffering from FEVER').
+disease(n,y,y,n):-write('You are experiencing initial stages of COMMON COLD').
+disease(n,y,n,y):-write('You are suffering from DEHYDRATION').
+disease(n,y,n,n):-write('You are suffering from DENGU FEVER').
+disease(n,n,y,y):-write('You are suffering from CHICKENGUNYA').
+disease(n,n,y,n):-write('You are suffering from SORE THROAT').
+disease(n,n,n,y):-write('You can relax, U are ENERVATED').
+disease(n,n,n,n):-write('You are ALRIGHT').
+
+```
+
+### Output:
+
+```bash
+% c:/users/harsh/onedrive/documents/prolog/exp4 compiled 0.00 sec, 0 clauses
+?- run.
+Do you have HEADACHE?y.
+Do you have TEMPERATURE?|: n.
+Do you have a SORE THROAT?|: y.
+Are you feeling TIRED?|: y.
+You are suffering from COLD
+true .
+```
+
 5. Write a program to solve the 4-Queen problem.
 6. Write a program to solve traveling salesman problems.
 7. Write a program to solve water jug problems using Prolog.
