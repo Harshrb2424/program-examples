@@ -26,4 +26,3 @@ disease(n,n,y,y):-write('You are suffering from CHICKENGUNYA').
 disease(n,n,y,n):-write('You are suffering from SORE THROAT').
 disease(n,n,n,y):-write('You can relax, U are ENERVATED').
 disease(n,n,n,n):-write('You are ALRIGHT').
-

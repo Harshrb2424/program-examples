@@ -8,7 +8,7 @@
 - D. Rose is red.
 - E. John owns gold.
 
-### Source Code: `ex1.pl`
+### Source Code: `ex1.pl` [view file](./exp1.pl)
 
 ```pl
 likes(ram,mang0).
@@ -41,7 +41,7 @@ What = gold.
 - One converts centigrade temperatures to Fahrenheit.
 - The other checks if a temperature is below freezing.
 
-### Source Code: `ex2.pl`
+### Source Code: `ex2.pl` [view file](./exp2.pl)
 
 ```pl
 c_to_f(C,F):-
@@ -66,7 +66,7 @@ X = 89.6.
 
 ## 3. Write a program to solve the Monkey Banana problem.
 
-### Source Code: `ex3.pl`
+### Source Code: `ex3.pl` [view file](./exp3.pl)
 
 ```pl
 in_room(bananas).
@@ -105,7 +105,7 @@ Y = chair.
 
 ## 4. Write a program in Turbo Prolog for medical diagnosis and show the advantages and disadvantages of green and red cuts.
 
-### Source Code: `ex4.pl`
+### Source Code: `ex4.pl`[view file](./exp4.pl)
 
 ```pl
 run :-
