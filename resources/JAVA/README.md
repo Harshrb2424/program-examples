@@ -2,7 +2,7 @@
 
 ## 1. Use Eclipse or Net bean platform and acquaint yourself with the various menus. Create a test project, add a test class, and run it. See how you can use auto suggestions, auto fill. Try code formatter and code refactoring like renaming variables, methods, and classes. Try debug step by step with a small program of about 10 to 15 lines which contains at least one if else condition and a for loop.
 
-### Source Code: `ex1.pl` [view file](./exp1.java)
+### Source Code: `ex1.java` [view file](./exp1.java)
 ```java
 import java.util.Scanner;
 
@@ -31,7 +31,7 @@ Enter any Number: 247
 
 ## 2. Write a Java program to demonstrate the OOP principles. [i.e., Encapsulation, Inheritance, Polymorphism and Abstraction]
 
-### Source Code: `ex2.pl` [view file](./exp2.java)
+### Source Code: `ex2.java` [view file](./exp2.java)
 ```java
 import java.util.Scanner;
 
@@ -102,7 +102,7 @@ Rectangle Area: 1802.0
 
 ## 3. Write a Java program to handle checked and unchecked exceptions. Also, demonstrate the usage of custom exceptions in real-time scenarios.
 
-### Source Code: `ex3.pl` [view file](./exp3.java)
+### Source Code: `ex3.java` [view file](./exp3.java)
 ```java
 class InsuffBalEx extends Exception {
     public InsuffBalEx(String msg) {
@@ -157,7 +157,7 @@ Unchecked Exception: / by zero
 ```
 ## 4. Write a Java program on Random Access File class to perform different read and write operations.
 
-### Source Code: `ex4.pl` [view file](./exp4.java)
+### Source Code: `ex4.java` [view file](./exp4.java)
 
 ```java
 import java.io.RandomAccessFile;
@@ -208,7 +208,7 @@ Number: 420
 ```
 ## 5. Write a Java program to demonstrate the working of different collection classes. [Use package structure to store multiple classes].
 
-### Source Code: `ex5.pl` [view file](./exp5.pl)
+### Source Code: `ex5.java` [view file](./exp5.java)
 ```java
 import java.util.ArrayList;
 import java.util.HashMap;
