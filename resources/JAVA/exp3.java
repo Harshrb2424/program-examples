@@ -1,43 +1,44 @@
-class InsuffBalEx extends Exception {
-    public InsuffBalEx(String msg) {
-        super(msg);
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileNotFoundException;
+
+class InvalidAgeException extends Exception {
+    public InvalidAgeException(String message) {
+        super(message);
     }
 }
-
-class Account {
-    private double bal;
-
-    public Account(double initBal) {
-        this.bal = initBal;
-    }
-
-    public void withdraw(double amt) throws InsuffBalEx {
-        if (amt > bal) {
-            throw new InsuffBalEx("Insufficient balance");
+class Experiment3 {
+    public static void register(String name, int age) throws InvalidAgeException {
+        if (age < 18) {
+            throw new InvalidAgeException("User must be at least 18 years old.");
+        } else {
+            System.out.println("Registration successful for user: " + name);
         }
-        bal -= amt;
-        System.out.println("Withdrawal of " + amt + " successful. Remaining balance: " + bal);
     }
 
-    public void unsafeOp() {
-        int res = 10 / 0; // ArithmeticException
-    }
-}
-
-public class exp3 {
     public static void main(String[] args) {
-        Account acc = new Account(1000);
         try {
-            acc.withdraw(100);
-            acc.withdraw(700);
-            acc.withdraw(400);
-        } catch (InsuffBalEx e) {
-            System.out.println("Checked Exception: " + e.getMessage());
+            File file = new File("myfile.txt");
+            FileReader fr = new FileReader(file); 
+        } catch (FileNotFoundException e) {
+            System.out.println("File not found: " + e.getMessage());
         }
+
+        try {   
+            int[] arr = {1, 2, 3};
+            System.out.println(arr[6]);
+        } catch (ArrayIndexOutOfBoundsException e) {
+            System.out.println("Array index out of bounds: " + e.getMessage());
+        }
+        finally {
+            System.out.println("Cleanup operations can be performed here.");
+        }
+
+        System.out.println("Demonstrating Custom Exception:");
         try {
-            acc.unsafeOp(); // ArithmeticException
-        } catch (ArithmeticException e) {
-            System.out.println("Unchecked Exception: " + e.getMessage());
+            register("Madhu", 17);
+        } catch (InvalidAgeException e) {
+            System.out.println("Custom Exception Caught: " + e.getMessage());
         }
     }
 }

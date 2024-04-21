@@ -4,250 +4,291 @@
 
 ### Source Code: `ex1.java` [view file](./exp1.java)
 ```java
+import java.lang.System;
 import java.util.Scanner;
+class Experiment1 {
+    public static void main(String args[]) { 
+        int i,count=0,n;
 
-public class exp1 {
-    public static void main(String args[]) {
-        int i, count = 0, n;
-        Scanner sc = new Scanner(System.in);
-        System.out.print("Enter any Number: ");
-        n = sc.nextInt();
-        for(i=1; i<=n; i++) {
-            if(n%i == 0)
-                count++;
-        }
-        if (count == 2)
-            System.out.print(n+" is prime.");
+        Scanner sc=new Scanner(System.in);
+        System.out.print("Enter Any Number : ");
+        n=sc.nextInt();
+        
+        for(i=1;i<=n;i++) { 
+            if(n%i==0) { 
+                count++; 
+            } 
+        } 
+        if(count==2) 
+            System.out.println(n+" is prime");
         else
-            System.out.print(n+" is not a prime.");
-    }
+            System.out.println(n+" is not prime");
+    } 
 }
 ```
 ### Output:
 ```bash
-Enter any Number: 247
-247 is not a prime.
+D:\java> javac .\exp1.java     
+D:\java> java Experiment1  
+Enter Any Number : 457
+457 is prime
 ```
 
 ## 2. Write a Java program to demonstrate the OOP principles. [i.e., Encapsulation, Inheritance, Polymorphism and Abstraction]
 
 ### Source Code: `ex2.java` [view file](./exp2.java)
 ```java
-import java.util.Scanner;
+class Person {
+    private String name; // Encapsulation
+    private int age; // Encapsulation
 
-abstract class Shape
-{
-	public abstract double area();
-} // Anstraction
+    public Person(String name, int age) {
+        this.name = name;
+        this.age = age;
+    }
+    public String getName() { // Abstraction
+        return name;
+    }
+    public void setName(String name) {
+        this.name = name;
+    }
+    public int getAge() { // Abstraction
+        return age;
+    }
+    public void setAge(int age) {
+        this.age = age;
+    }
+    public void displayInfo() { // Abstraction
+        System.out.println("Name: " + name);
+        System.out.println("Age: " + age);
+    }
+}
+class Employee extends Person { // Inheritance
+    private double salary;
 
-class Circle extends Shape {
-	private double radius;
-	public Circle(double radius) {
-		this.radius = radius;
-	}
-	public double area()
-	{
-		return Math.PI * radius * radius;
-	} // Inheritance
+    public Employee(String name, int age, double salary) {
+        super(name, age);
+        this.salary = salary;
+    }
+    public double getSalary() {
+        return salary;
+    }
+    public void setSalary(double salary) {
+        this.salary = salary;
+    }
+    public void displayInfo() { // Polymorphism
+        super.displayInfo();
+        System.out.println("Salary: " + salary);
+    }
 }
 
-class Rectangle extends Shape
-{
-	private double length;
-	private double width;
-	public Rectangle(double length, double width)
-	{
-		this.length = length;
-		this.width = width;
-	}
-	public double area() {
-			return length * width;
-	} // Inheritance
+ class Experiment2 {
+    public static void main(String[] args) {
+        Person person = new Person("Purushottam", 20);
+        System.out.println("Person Info:");
+        person.displayInfo();
+        System.out.println("====================");
+        Person employee = new Employee("Harsh", 19, 10000);
+        System.out.println("Employee Info:");
+        employee.displayInfo();
+    }
 }
-class ShapeCalculator {
-	public double calculateArea(Shape shape) {
-		return shape.area();
-	}
-} // Polymorphism
-
-public class exp2 {
-public static void main(String[] args) {
-	float radius, length, width;
-	Scanner sc = new Scanner(System.in);
-	System.out.print("Enter Circle radius: ");
-    radius = sc.nextFloat();
-	Circle circle = new Circle(radius); // Encapsulation
-	System.out.print("Enter Rectangle length: ");
-    length = sc.nextFloat();
-	System.out.print("Enter Rectangle width: ");
-	width = sc.nextFloat();
-	Rectangle rectangle = new Rectangle(length, width); // Encapsulation
-	ShapeCalculator calculator = new ShapeCalculator();
-	double circleArea = calculator.calculateArea(circle);  // Polymorphism
-	double rectangleArea = calculator.calculateArea(rectangle);  // Polymorphism
-	System.out.println("Circle Area: " + circleArea);
-	System.out.println("Rectangle Area: " + rectangleArea);
-	}
-}
-
 ```
 ### Output:
 ```bash
-Enter Circle radius: 41
-Enter Rectangle length: 34
-Enter Rectangle width: 53
-Circle Area: 5281.017250684442
-Rectangle Area: 1802.0
+PS D:\java> javac .\exp2.java
+PS D:\java> java Experiment2 
+Person Info:
+Name: Purushottam
+Age: 20
+====================
+Employee Info:
+Name: Harsh
+Age: 19
+Salary: 10000.0
 ```
 
 ## 3. Write a Java program to handle checked and unchecked exceptions. Also, demonstrate the usage of custom exceptions in real-time scenarios.
 
 ### Source Code: `ex3.java` [view file](./exp3.java)
 ```java
-class InsuffBalEx extends Exception {
-    public InsuffBalEx(String msg) {
-        super(msg);
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileNotFoundException;
+
+class InvalidAgeException extends Exception {
+    public InvalidAgeException(String message) {
+        super(message);
     }
 }
-
-class Account {
-    private double bal;
-
-    public Account(double initBal) {
-        this.bal = initBal;
-    }
-
-    public void withdraw(double amt) throws InsuffBalEx {
-        if (amt > bal) {
-            throw new InsuffBalEx("Insufficient balance");
+class Experiment3 {
+    public static void register(String name, int age) throws InvalidAgeException {
+        if (age < 18) {
+            throw new InvalidAgeException("User must be at least 18 years old.");
+        } else {
+            System.out.println("Registration successful for user: " + name);
         }
-        bal -= amt;
-        System.out.println("Withdrawal of " + amt + " successful. Remaining balance: " + bal);
     }
 
-    public void unsafeOp() {
-        int res = 10 / 0; // ArithmeticException
-    }
-}
-
-public class exp3 {
     public static void main(String[] args) {
-        Account acc = new Account(1000);
         try {
-            acc.withdraw(100);
-            acc.withdraw(700);
-            acc.withdraw(400);
-        } catch (InsuffBalEx e) {
-            System.out.println("Checked Exception: " + e.getMessage());
+            File file = new File("myfile.txt");
+            FileReader fr = new FileReader(file); 
+        } catch (FileNotFoundException e) {
+            System.out.println("File not found: " + e.getMessage());
         }
+
+        try {   
+            int[] arr = {1, 2, 3};
+            System.out.println(arr[6]);
+        } catch (ArrayIndexOutOfBoundsException e) {
+            System.out.println("Array index out of bounds: " + e.getMessage());
+        }
+        finally {
+            System.out.println("Cleanup operations can be performed here.");
+        }
+
+        System.out.println("Demonstrating Custom Exception:");
         try {
-            acc.unsafeOp(); // ArithmeticException
-        } catch (ArithmeticException e) {
-            System.out.println("Unchecked Exception: " + e.getMessage());
+            register("Madhu", 17);
+        } catch (InvalidAgeException e) {
+            System.out.println("Custom Exception Caught: " + e.getMessage());
         }
     }
 }
 ```
 ### Output:
+
 ```bash
-Withdrawal of 100.0 successful. Remaining balance: 900.0
-Withdrawal of 700.0 successful. Remaining balance: 200.0
-Checked Exception: Insufficient balance
-Unchecked Exception: / by zero
+PS D:\java> javac .\exp3.java
+PS D:\java> java Experiment3 
+File not found: myfile.txt (The system cannot find the file specified)
+Array index out of bounds: Index 6 out of bounds for length 3
+Cleanup operations can be performed here.
+Demonstrating Custom Exception:
+Custom Exception Caught: User must be at least 18 years old.
 ```
 ## 4. Write a Java program on Random Access File class to perform different read and write operations.
 
 ### Source Code: `ex4.java` [view file](./exp4.java)
 
 ```java
-import java.io.RandomAccessFile;
-import java.io.IOException;
+import java.io.*;
+class Experiment4 {
+    public static void main(String[] args) {
+    try {
+        RandomAccessFile file = new RandomAccessFile("data.txt", "rw");
+        String data1 = "Hello";
+        String data2 = "World";
+        file.writeUTF(data1);
+        file.writeUTF(data2);
 
-public class exp4 {
-       public static void main(String[] args) {
-        try {
-            RandomAccessFile file = new RandomAccessFile("data.txt", "rw");
+        file.seek(0);
+        String readData1 = file.readUTF();
+        String readData2 = file.readUTF();
+        System.out.println("Data read from file:");
+        System.out.println(readData1);
+        System.out.println(readData2);
 
-            file.writeUTF("Hello");
-            file.seek(16);
-            file.writeInt(420);
-            file.seek(8);
-            file.writeUTF("World!");
+        file.seek(file.length());
+        String newData = "Java!";
+        file.writeUTF(newData);
 
-            file.seek(0);
-            String str1 = file.readUTF();
-            file.seek(8);
-            String str2 = file.readUTF();
-            file.seek(16);
-            int num = file.readInt();
+        file.seek(0);
+        readData1 = file.readUTF();
+        readData2 = file.readUTF();
 
-            System.out.println("String 1: " + str1);
-            System.out.println("String 2: " + str2);
-            System.out.println("Number: " + num);
-
-            file.seek(0);
-            file.writeUTF("Updated ");
-            file.seek(8);
-            file.writeUTF("Text!");
-            file.seek(16);
-            file.writeInt(100);
-           
-            file.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        String readData3 = file.readUTF();
+        System.out.println("Data read from file after appending:");
+        System.out.println(readData1);
+        System.out.println(readData2);
+        System.out.println(readData3);
+        file.close();
+    } catch (IOException e) {
+        System.out.println("An error occurred: " + e.getMessage());
+        e.printStackTrace();
+    }
     }
 }
 ```
 
 ### Output:
+
 ```bash
-String 1: Hello
-String 2: World!
-Number: 420
+PS D:\java> javac .\exp4.java
+PS D:\java> java Experiment4 
+Data read from file:
+Hello
+World
+Data read from file after appending:
+Hello
+World
+Java!
 ```
 ## 5. Write a Java program to demonstrate the working of different collection classes. [Use package structure to store multiple classes].
 
-### Source Code: `ex5.java` [view file](./exp5.java)
+### Source Code: [view folder](./exp5)
+
+`CollectionsDemo.java` 
 ```java
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
-
-public class exp5 {
-
+package collections;
+public class CollectionsDemo {
     public static void main(String[] args) {
-        ArrayList<String> arrayList = new ArrayList<>();
-        arrayList.add("Apple");
-        arrayList.add("Banana");
-        arrayList.add("Mango");
-        arrayList.add("Grape");
-
-        System.out.println("ArrayList elements:");
-        for (String fruit : arrayList) {
+        ListExample.main(args);
+        SetExample.main(args);
+        MapExample.main(args);
+    }
+}
+```
+`ListExample.java`
+```java
+package collections;
+import java.util.ArrayList;
+public class ListExample {
+    public static void main(String[] args) {
+        ArrayList<String> list = new ArrayList<>();
+        list.add("Apple");
+        list.add("Banana");
+        list.add("Orange");
+        System.out.println("List Example:");
+        for (String fruit : list) {
             System.out.println(fruit);
         }
+    }
+}
+```
 
-        HashMap<Integer, String> hashMap = new HashMap<>();
-        hashMap.put(1, "Harsh");
-        hashMap.put(2, "Aman");
-        hashMap.put(3, "Abhi");
-        hashMap.put(4, "Yash");
-
-        System.out.println("\nHashMap elements:");
-        for (int key : hashMap.keySet()) {
-            System.out.println("Key: " + key + ", Value: " + hashMap.get(key));
+`MapExample.java`
+```java
+package collections;
+import java.util.HashMap;
+public class MapExample {
+    public static void main(String[] args) {
+        HashMap<Integer, String> map = new HashMap<>();
+        map.put(1, "Apple");
+        map.put(2, "Banana");
+        map.put(3, "Orange");
+        System.out.println("Map Example:");
+        for (HashMap.Entry<Integer, String> entry : map.entrySet()) {
+        System.out.println(entry.getKey() + ": " + entry.getValue());
         }
+    }
+}```
 
-        HashSet<String> hashSet = new HashSet<>();
-        hashSet.add("Red");
-        hashSet.add("Green");
-        hashSet.add("Blue");
-        hashSet.add("Red");
-
-        System.out.println("\nHashSet elements:");
-        for (String color : hashSet) {
-            System.out.println(color);
+`SetExample.java`
+```java
+package collections;
+import java.util.HashSet;
+public class SetExample {
+    public static void main(String[] args) {
+        HashSet<String> set = new HashSet<>();
+        set.add("Apple");
+        set.add("Banana");
+        set.add("Orange");
+        set.add("Apple");
+        System.out.println("Set Example:");
+        for (String fruit : set) {
+            System.out.println(fruit);
         }
     }
 }
@@ -255,22 +296,23 @@ public class exp5 {
 
 ### Output:
 ```bash
-ArrayList elements:
+D:\java\exp5> javac -d . ListExample.java
+D:\java\exp5> javac -d . SetExample.java     
+D:\java\exp5> javac -d . MapExample.java
+D:\java\exp5> javac -d . CollectionsDemo.java
+D:\java\exp5> java collections.CollectionsDemo  
+List Example:
 Apple
 Banana
-Mango
-Grape
-
-HashMap elements:
-Key: 1, Value: Harsh
-Key: 2, Value: Aman
-Key: 3, Value: Abhi
-Key: 4, Value: Yash
-
-HashSet elements:
-Red
-Blue
-Green
+Orange
+Set Example:
+Apple
+Orange
+Banana
+Map Example:
+1: Apple
+2: Banana
+3: Orange
 ```
 
 ## 6. Write a program to synchronize the threads acting on the same object. [Consider the example of any reservations like railway, bus, movie ticket booking, etc.]

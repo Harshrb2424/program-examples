@@ -1,38 +1,37 @@
-import java.io.RandomAccessFile;
-import java.io.IOException;
+import java.io.*;
+class Experiment4 {
+    public static void main(String[] args) {
+    try {
+        RandomAccessFile file = new RandomAccessFile("data.txt", "rw");
+        String data1 = "Hello";
+        String data2 = "World";
+        file.writeUTF(data1);
+        file.writeUTF(data2);
 
-public class exp4 {
-       public static void main(String[] args) {
-        try {
-            RandomAccessFile file = new RandomAccessFile("data.txt", "rw");
+        file.seek(0);
+        String readData1 = file.readUTF();
+        String readData2 = file.readUTF();
+        System.out.println("Data read from file:");
+        System.out.println(readData1);
+        System.out.println(readData2);
 
-            file.writeUTF("Hello");
-            file.seek(16);
-            file.writeInt(420);
-            file.seek(8);
-            file.writeUTF("World!");
+        file.seek(file.length());
+        String newData = "Java!";
+        file.writeUTF(newData);
 
-            file.seek(0);
-            String str1 = file.readUTF();
-            file.seek(8);
-            String str2 = file.readUTF();
-            file.seek(16);
-            int num = file.readInt();
+        file.seek(0);
+        readData1 = file.readUTF();
+        readData2 = file.readUTF();
 
-            System.out.println("String 1: " + str1);
-            System.out.println("String 2: " + str2);
-            System.out.println("Number: " + num);
-
-            file.seek(0);
-            file.writeUTF("Updated ");
-            file.seek(8);
-            file.writeUTF("Text!");
-            file.seek(16);
-            file.writeInt(100);
-           
-            file.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        String readData3 = file.readUTF();
+        System.out.println("Data read from file after appending:");
+        System.out.println(readData1);
+        System.out.println(readData2);
+        System.out.println(readData3);
+        file.close();
+    } catch (IOException e) {
+        System.out.println("An error occurred: " + e.getMessage());
+        e.printStackTrace();
+    }
     }
 }

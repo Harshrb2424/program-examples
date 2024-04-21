@@ -1,56 +1,55 @@
-import java.util.Scanner;
+class Person {
+    private String name; // Encapsulation
+    private int age; // Encapsulation
 
-abstract class Shape
-{
-	public abstract double area();
-} // Anstraction
+    public Person(String name, int age) {
+        this.name = name;
+        this.age = age;
+    }
+    public String getName() { // Abstraction
+        return name;
+    }
+    public void setName(String name) {
+        this.name = name;
+    }
+    public int getAge() { // Abstraction
+        return age;
+    }
+    public void setAge(int age) {
+        this.age = age;
+    }
+    public void displayInfo() { // Abstraction
+        System.out.println("Name: " + name);
+        System.out.println("Age: " + age);
+    }
+}
+class Employee extends Person { // Inheritance
+    private double salary;
 
-class Circle extends Shape {
-	private double radius;
-	public Circle(double radius) {
-		this.radius = radius;
-	}
-	public double area()
-	{
-		return Math.PI * radius * radius;
-	} // Inheritance
+    public Employee(String name, int age, double salary) {
+        super(name, age);
+        this.salary = salary;
+    }
+    public double getSalary() {
+        return salary;
+    }
+    public void setSalary(double salary) {
+        this.salary = salary;
+    }
+    public void displayInfo() { // Polymorphism
+        super.displayInfo();
+        System.out.println("Salary: " + salary);
+    }
 }
 
-class Rectangle extends Shape
-{
-	private double length;
-	private double width;
-	public Rectangle(double length, double width)
-	{
-		this.length = length;
-		this.width = width;
-	}
-	public double area() {
-			return length * width;
-	} // Inheritance
-}
-class ShapeCalculator {
-	public double calculateArea(Shape shape) {
-		return shape.area();
-	}
-} // Polymorphism
-
-public class exp2 {
-public static void main(String[] args) {
-	float radius, length, width;
-	Scanner sc = new Scanner(System.in);
-	System.out.print("Enter Circle radius: ");
-    radius = sc.nextFloat();
-	Circle circle = new Circle(radius); // Encapsulation
-	System.out.print("Enter Rectangle length: ");
-    length = sc.nextFloat();
-	System.out.print("Enter Rectangle width: ");
-	width = sc.nextFloat();
-	Rectangle rectangle = new Rectangle(length, width); // Encapsulation
-	ShapeCalculator calculator = new ShapeCalculator();
-	double circleArea = calculator.calculateArea(circle);  // Polymorphism
-	double rectangleArea = calculator.calculateArea(rectangle);  // Polymorphism
-	System.out.println("Circle Area: " + circleArea);
-	System.out.println("Rectangle Area: " + rectangleArea);
-	}
+ class Experiment2 {
+    public static void main(String[] args) {
+        Person person = new Person("Purushottam", 20);
+        System.out.println("Person Info:");
+        person.displayInfo();
+        System.out.println("====================");
+        Person employee = new Employee("Harsh", 19, 10000);
+        System.out.println("Employee Info:");
+        employee.displayInfo();
+    }
 }
