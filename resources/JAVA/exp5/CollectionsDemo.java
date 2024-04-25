@@ -1,5 +1,5 @@
 package collections;
-public class CollectionsDemo {
+class Collections {
     public static void main(String[] args) {
         ListExample.main(args);
         SetExample.main(args);

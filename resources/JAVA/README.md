@@ -261,15 +261,16 @@ import java.util.ArrayList;
 public class ListExample {
     public static void main(String[] args) {
         ArrayList<String> list = new ArrayList<>();
-        list.add("Apple");
-        list.add("Banana");
-        list.add("Orange");
+        list.add("Plums");
+        list.add("Pineapple");
+        list.add("Watermelon");
         System.out.println("List Example:");
         for (String fruit : list) {
             System.out.println(fruit);
         }
     }
 }
+
 ```
 
 `MapExample.java`
@@ -279,15 +280,16 @@ import java.util.HashMap;
 public class MapExample {
     public static void main(String[] args) {
         HashMap<Integer, String> map = new HashMap<>();
-        map.put(1, "Apple");
-        map.put(2, "Banana");
+        map.put(1, "Grape");
+        map.put(2, "Strawberry");
         map.put(3, "Orange");
         System.out.println("Map Example:");
         for (HashMap.Entry<Integer, String> entry : map.entrySet()) {
         System.out.println(entry.getKey() + ": " + entry.getValue());
         }
     }
-}```
+}
+```
 
 `SetExample.java`
 ```java
@@ -299,7 +301,7 @@ public class SetExample {
         set.add("Apple");
         set.add("Banana");
         set.add("Orange");
-        set.add("Apple");
+        set.add("Mango");
         System.out.println("Set Example:");
         for (String fruit : set) {
             System.out.println(fruit);
