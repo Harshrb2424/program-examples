@@ -6,7 +6,7 @@ public class SetExample {
         set.add("Apple");
         set.add("Banana");
         set.add("Orange");
-        set.add("Apple");
+        set.add("Mango");
         System.out.println("Set Example:");
         for (String fruit : set) {
             System.out.println(fruit);

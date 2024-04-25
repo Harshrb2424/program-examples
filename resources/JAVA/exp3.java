@@ -36,7 +36,8 @@ class Experiment3 {
 
         System.out.println("Demonstrating Custom Exception:");
         try {
-            register("Madhu", 17);
+            register("Harsh RB", 18);
+            register("Purushottam", 16);
         } catch (InvalidAgeException e) {
             System.out.println("Custom Exception Caught: " + e.getMessage());
         }

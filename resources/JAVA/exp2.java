@@ -48,8 +48,15 @@ class Employee extends Person { // Inheritance
         System.out.println("Person Info:");
         person.displayInfo();
         System.out.println("====================");
+       
         Person employee = new Employee("Harsh", 19, 10000);
         System.out.println("Employee Info:");
+        employee.displayInfo();
+        System.out.println("====================");
+        
+        employee.setName("Harsh RB");
+        employee.setAge(20);
+        System.out.println("Data Updated:");
         employee.displayInfo();
     }
 }

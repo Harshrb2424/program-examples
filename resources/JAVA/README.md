@@ -88,8 +88,15 @@ class Employee extends Person { // Inheritance
         System.out.println("Person Info:");
         person.displayInfo();
         System.out.println("====================");
+       
         Person employee = new Employee("Harsh", 19, 10000);
         System.out.println("Employee Info:");
+        employee.displayInfo();
+        System.out.println("====================");
+        
+        employee.setName("Harsh RB");
+        employee.setAge(20);
+        System.out.println("Data Updated:");
         employee.displayInfo();
     }
 }
@@ -105,6 +112,11 @@ Age: 20
 Employee Info:
 Name: Harsh
 Age: 19
+Salary: 10000.0
+====================
+Data Updated:
+Name: Harsh RB
+Age: 20
 Salary: 10000.0
 ```
 
@@ -150,7 +162,8 @@ class Experiment3 {
 
         System.out.println("Demonstrating Custom Exception:");
         try {
-            register("Madhu", 17);
+            register("Harsh RB", 18);
+            register("Purushottam", 16);
         } catch (InvalidAgeException e) {
             System.out.println("Custom Exception Caught: " + e.getMessage());
         }
@@ -160,12 +173,13 @@ class Experiment3 {
 ### Output:
 
 ```bash
-PS D:\java> javac .\exp3.java
-PS D:\java> java Experiment3 
+PS D:/JAVA> javac .\exp3.java
+PS D:/JAVA> java Experiment3
 File not found: myfile.txt (The system cannot find the file specified)
 Array index out of bounds: Index 6 out of bounds for length 3
 Cleanup operations can be performed here.
 Demonstrating Custom Exception:
+Registration successful for user: Harsh RB
 Custom Exception Caught: User must be at least 18 years old.
 ```
 ## 4. Write a Java program on Random Access File class to perform different read and write operations.
@@ -302,16 +316,17 @@ D:\java\exp5> javac -d . MapExample.java
 D:\java\exp5> javac -d . CollectionsDemo.java
 D:\java\exp5> java collections.CollectionsDemo  
 List Example:
-Apple
-Banana
-Orange
+Plums
+Pineapple
+Watermelon
 Set Example:
 Apple
+Mango
 Orange
 Banana
 Map Example:
-1: Apple
-2: Banana
+1: Grape
+2: Strawberry
 3: Orange
 ```
 
