@@ -65,7 +65,7 @@ X = 89.6.
 ```
 
 ## 3. Write a program to solve the Monkey Banana problem.
-
+magine a room containing a monkey, chair and some bananas. That have been hanged from the center of ceiling. If the monkey is clever enough he can reach the bananas by placing the chair directly below the bananas and climb on the chair.
 ### Source Code: `ex3.pl` [view file](./exp3.pl)
 
 ```pl
@@ -104,6 +104,13 @@ Y = chair.
 ```
 
 ## 4. Write a program in Turbo Prolog for medical diagnosis and show the advantages and disadvantages of green and red cuts.
+### ALGORITHM
+1. Start
+2. First the knowledge is encoded in knowledge base
+3. A set of new questions are raised to the users
+4. Matching the answers convert personality is returned
+5. No match occur error message displayed
+6. Stop.
 
 ### Source Code: `ex4.pl`[view file](./exp4.pl)
 
@@ -152,7 +159,52 @@ You are suffering from COLD
 true .
 ```
 
-5. Write a program to solve the 4-Queen problem.
+# 5. Write a program to solve the 4-Queen problem.
+### Description
+In the 4 Queens problem the object is to place 4 queens on a chessboard in such a way that no queens can capture a piece. This means that no two queens may be placed on the same row, column, or diagonal.
+### Source Code: `ex5.pl`[view file](./exp5.pl)
+```pl
+queens(N, Queens) :-
+    length(Queens, N),
+    board(Queens, Board, 0, N, _, _),
+    queens(Board, 0, Queens).
+
+board([], [], N, N, _, _).
+
+board([_|Queens], [Col-Vars|Board], Col0, N, [_|VR], VC):-
+    Col is Col0+1,
+    functor(Vars, f, N),
+    constraints(N, Vars, VR, VC),
+    board(Queens, Board, Col, N, VR, [_|VC]).
+
+constraints(0, _, _, _):- !.
+
+constraints(N, Row, [R|Rs], [C|Cs]):-
+    arg(N, Row, R-C),
+    M is N-1,
+    constraints(M, Row, Rs, Cs).
+
+queens([], _, []).
+
+queens([C|Cs], Row0, [Col|Solution]) :-
+    Row is Row0+1,
+    select(Col-Vars, [C|Cs], Board),
+    arg(Row, Vars, Row-Row),
+    queens(Board, Row, Solution).
+```
+### Output
+```bash
+ጀ% c:/users/harsh/onedrive/documents/prolog/exp5 compiled 0.00 sec, -2 clauses
+?- queens(4,Queens).
+Queens = [2, 4, 1, 3] .
+
+?- queens(5,Queens).
+Queens = [1, 3, 5, 2, 4] .
+
+?- queens(7,Queens).
+Queens = [1, 3, 5, 7, 2, 4, 6] .
+```
+
 6. Write a program to solve traveling salesman problems.
 7. Write a program to solve water jug problems using Prolog.
 8. Write simple Prolog functions such as the following:
