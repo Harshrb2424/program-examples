@@ -1,24 +1,51 @@
-class MovieTicket {
-    private int ticketCount = 10; // Total number of tickets available
+class TicketBookingSystem {
+    private int availableTickets = 10; // Total tickets available
 
-    public synchronized void bookTicket() {
-        if (ticketCount > 0) {
-            System.out.println("Booking ticket...");
-            ticketCount--;
-            System.out.println("Ticket booked successfully. Remaining tickets: " + ticketCount);
-        } else {
-            System.out.println("No tickets available.");
+    // Method to book tickets, synchronized to handle concurrency
+    public synchronized void bookTickets(String passengerName, int ticketsToBook) {
+        if (ticketsToBook > availableTickets) {
+            System.out.println("Sorry, " + passengerName + ". Not enough tickets available.");
+            return;
         }
+
+        // Simulating some delay to mimic real-world booking process
+        try {
+            Thread.sleep(100); // Introducing a small delay
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        // Booking tickets
+        System.out.println(ticketsToBook + " ticket(s) booked for " + passengerName);
+        availableTickets -= ticketsToBook;
+        System.out.println("Remaining tickets: " + availableTickets);
     }
 }
 
-public class TicketBookingSystem {
+class TicketBookingExample {
     public static void main(String[] args) {
-        MovieTicket movieTicket = new MovieTicket();
-        Thread thread1 = new Thread(() -> movieTicket.bookTicket());
-        Thread thread2 = new Thread(() -> movieTicket.bookTicket());
+        TicketBookingSystem ticketSystem = new TicketBookingSystem();
 
+        // Creating multiple threads to book tickets
+        Thread thread1 = new Thread(() -> ticketSystem.bookTickets("Alice", 3));
+        Thread thread2 = new Thread(() -> ticketSystem.bookTickets("Bob", 2));
+        Thread thread3 = new Thread(() -> ticketSystem.bookTickets("Harsh", 4));
+        Thread thread4 = new Thread(() -> ticketSystem.bookTickets("Carol", 4));
+
+        // Start all threads
         thread1.start();
         thread2.start();
+        thread3.start();
+        thread4.start();
+
+        // Wait for all threads to complete
+        try {
+            thread1.join();
+            thread2.join();
+            thread3.join();
+            thread4.join();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 }
