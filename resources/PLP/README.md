@@ -205,8 +205,108 @@ Queens = [1, 3, 5, 2, 4] .
 Queens = [1, 3, 5, 7, 2, 4, 6] .
 ```
 
-6. Write a program to solve traveling salesman problems.
-7. Write a program to solve water jug problems using Prolog.
+## 6. Write a program to solve traveling salesman problems.
+### Source Code: `exp6.pl`[view file](./exp6.pl)
+```pl
+road("tampa", "houston", 200).
+road("gordon", "tampa", 300).
+road("houston", "gordon", 100).
+road("houston", "kansas_city", 120).
+road("gordon", "kansas_city", 130).
+
+route(Town1, Town2, Distance) :-
+    road(Town1, Town2, Distance).
+
+route(Town1, Town2, Distance) :-
+    road(Town1, X, Dist1),
+    route(X, Town2, Dist2),
+    Distance is Dist1 + Dist2, !.
+```
+### Output
+```bash
+?- route("tampa", "houston", Distance).
+Distance = 200.
+
+?- route("gordon", "kansas_city", Distance).
+Distance = 130 ;
+Distance = 420.
+
+?- route("tampa", "kansas_city", Distance).
+Distance = 320 ;
+Distance = 530.
+
+?- route("houston", "kansas_city", Distance).
+Distance = 120 ;
+Distance = 230 ;
+false.
+
+?- route("houston", "gordon", Distance).
+Distance = 100.
+
+```
+## 7. Write a program to solve water jug problems using Prolog.
+### Source Code: `exp7.pl`[view file](./exp7.pl)
+```pl
+member(X, [X|_]).
+member(X, [Y|Z]):-member(X,Z).
+
+move(X,Y,_):-X=:=2,Y=:=0,write('done'),!.
+
+move(X,Y,Z):-X<4,\+member((4,Y),Z),
+    write("fill 4 gallon jug"),nl,move(4,Y,[(4,Y)|Z]).
+
+move(X,Y,Z):-Y<3, \+member((X,3),Z),
+    write("fill 3 gallon jug"),nl,move(X,3,[(X,3)|z]).
+
+move(X,Y,Z):-X>0,\+member((0,Y),Z),
+    write("pour 4 galloon jug"),nl, move(0,Y,[(0,Y)|Z]).
+
+move(X,Y,Z):-Y>0,\+member((X,0),Z),
+    write("pour 3 galloon jug"),nl, move(X,0,[(X,0)|Z]).
+
+move(X,Y,Z):-P is X+Y, P>=4, Y>0,K is 4-X,M is Y-K,\+member((4,M),Z),
+    write("pour from 3 gallon jug to 4 gallon jug"),nl, move(4, M, [(4,M)|Z]).
+
+move(X,Y,Z):-P is X+Y, P>=3, X>0,K is 3-Y,M is X-K,\+member((M,3),Z),
+    write("pour from 4 gallon jug to 3 gallon jug"),nl, move(M,3,[(M,3)|Z]).
+
+move(X,Y,Z):-K is X+Y, K<4, Y>0, \+member((K,0),Z),
+    write("pour from 3 gallon jug to 4 gallon jug"), nl, move(K,0,[(K,0)|Z]). move(X,Y,Z):-K is X+Y, K<3,X>0,\+member((0,K),Z),
+    write("pour from 4 gallon jug to 3 gallon jug"),nl, move(0,K, [(0,K)|Z]).
+
+```
+### Output
+```bash
+਀?- move(0, 0, []).
+fill 4 gallon jug
+fill 3 gallon jug
+pour 4 galloon jug
+pour 3 galloon jug
+fill 4 gallon jug
+pour from 4 gallon jug to 3 gallon jug
+pour 3 galloon jug
+pour from 4 gallon jug to 3 gallon jug
+fill 4 gallon jug
+pour from 4 gallon jug to 3 gallon jug
+pour 3 galloon jug
+done
+true .
+
+?- move(0, 2, []).
+fill 4 gallon jug
+fill 3 gallon jug
+pour 4 galloon jug
+pour 3 galloon jug
+fill 4 gallon jug
+pour from 4 gallon jug to 3 gallon jug
+pour 3 galloon jug
+pour from 4 gallon jug to 3 gallon jug
+fill 4 gallon jug
+pour from 4 gallon jug to 3 gallon jug
+pour 3 galloon jug
+done
+true .
+```
 8. Write simple Prolog functions such as the following:
    - Remove the Nth item from the list.
    - Insert as the Nth item.
