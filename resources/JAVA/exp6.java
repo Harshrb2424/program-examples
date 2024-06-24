@@ -28,9 +28,9 @@ class TicketBookingExample {
 
         // Creating multiple threads to book tickets
         Thread thread1 = new Thread(() -> ticketSystem.bookTickets("Alice", 3));
-        Thread thread2 = new Thread(() -> ticketSystem.bookTickets("Bob", 2));
+        Thread thread2 = new Thread(() -> ticketSystem.bookTickets("Bob", 5));
         Thread thread3 = new Thread(() -> ticketSystem.bookTickets("Harsh", 4));
-        Thread thread4 = new Thread(() -> ticketSystem.bookTickets("Carol", 4));
+        Thread thread4 = new Thread(() -> ticketSystem.bookTickets("Carol", 2));
 
         // Start all threads
         thread1.start();
