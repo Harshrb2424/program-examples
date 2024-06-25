@@ -159,7 +159,7 @@ You are suffering from COLD
 true .
 ```
 
-# 5. Write a program to solve the 4-Queen problem.
+## 5. Write a program to solve the 4-Queen problem.
 ### Description
 In the 4 Queens problem the object is to place 4 queens on a chessboard in such a way that no queens can capture a piece. This means that no two queens may be placed on the same row, column, or diagonal.
 ### Source Code: `ex5.pl`[view file](./exp5.pl)
@@ -307,14 +307,160 @@ pour 3 galloon jug
 done
 true .
 ```
-8. Write simple Prolog functions such as the following:
+## 8. Write simple Prolog functions such as the following:
    - Remove the Nth item from the list.
    - Insert as the Nth item.
+### Source Code: `exp8.pl`[view file](./exp8.pl)
+```pl
+```
+### Source Code: `exp8.pl`[view file](./exp8.pl)
+```pl
+delte(1,[_|T],T).
+delte(P,[X|Y],[X|R]):-
+P1 is P-1,
+delte(P1,Y,R).
+```
+### Output
+```bash
+?- delte(4,[1,2,3,4,5,6],R).
+R = [1, 2, 3, 5, 6] .
+
+?- delte(2,[a,b,c,d,e],R).
+R = [a, c, d, e] .
+
+?- delte(5,[1,2,3,4,5,6],R).
+R = [1, 2, 3, 4, 6] .
+
+```
 9. Assume the Prolog predicate `gt(A, B)` is true when A is greater than B. Use this predicate to define the predicate `addLeaf(Tree, X, NewTree)` which is true if NewTree is the Tree produced by adding the item X in a leaf node. Tree and NewTree are binary search trees. The empty tree is represented by the atom nil.
+### Source Code: `exp9.pl`[view file](./exp9.pl)
+```pl
+% Check if an element is in a binary tree
+in(X, t(_, X, _)).
+in(X, t(L, _, _)) :- 
+    in(X, L). 
+in(X, t(_, _, R)) :- 
+    in(X, R).
+
+% Check if an element is in a binary search tree
+in(X, t(_, X, _)).
+in(X, t(Left, Root, Right)) :-
+    gt(Root, X), 
+    in(X, Left). 
+in(X, t(Left, Root, Right)) :-
+    gt(X, Root), 
+    in(X, Right).
+
+% Add an element to a binary search tree
+add(Tree, X, NewTree) :-
+    addroot(Tree, X, NewTree). 
+add(t(L, Y, R), X, t(L1, Y, R)) :-
+    gt(Y, X),
+    add(L, X, L1). 
+add(t(L, Y, R), X, t(L, Y, R1)) :-
+    gt(X, Y), 
+    add(R, X, R1). 
+
+% Add an element to an empty tree
+addroot(nil, X, t(nil, X, nil)). 
+addroot(t(L, Y, R), X, t(L1, X, t(L2, Y, R))) :-
+    gt(Y, X), 
+    addroot(L, X, t(L1, X, L2)). 
+addroot(t(L, Y, R), X, t(t(L, Y, R1), X, R2)) :-
+    gt(X, Y), 
+    addroot(R, X, t(R1, X, R2)).
+
+% Display a binary tree
+show(Tree) :-
+    show2(Tree, 0).
+show2(nil, _).
+show2(t(Left, X, Right), Indent) :-
+    Ind2 is Indent + 2, 
+    show2(Right, Ind2), 
+    tab(Indent), write(X), nl, 
+    show2(Left, Ind2).
+
+```
+### Output
+```bash
+```
 10. Write a Prolog predicate, `countLists(Alist, Ne, Nl)`, using accumulators, that is true when Nl is the number of items that are listed at the top level of Alist and Ne is the number of empty lists. Suggestion: First try to count the lists, or empty lists, then modify by adding the other counter.
+### Source Code: `exp10.pl`[view file](./exp10.pl)
+```pl
+% Base case: an empty list has 0 empty sublists
+empties([], 0).
+
+% Recursive case: if the head of the list is an empty list, increment the count
+empties([[]|L], R) :-
+    empties(L, K),
+    R is K + 1.
+
+% Recursive case: if the head is not an empty list, just proceed with the tail
+empties([X|L], K) :-
+    X \= [],
+    empties(L, K).
+
+% Alternative implementation using findall and length to count empty sublists
+empties(L, N) :-
+    findall(X, (member(X, L), X = []), L1),
+    length(L1, N).
+
+```
+### Output
+```bash
+```
 11. Define a predicate `memCount(AList,Blist,Count)` that is true if Alist occurs Count times within Blist. Define without using an accumulator. Use "not" as defined in utilities.pro, to make similar cases are unique, or else you may get more than one count as an answer.
     Examples:
-
 - `memCount(a,[b,a],N)`. N = 1 ;
 - `memCount(a,[b,[a,a,[a],c],a],N)`. N = 4 ;
 - `memCount([a],[b,[a,a,[a],c],a],N)`. N = 1 ; No
+
+### Source Code: `exp11.pl`[view file](./exp11.pl)
+```pl
+% Check if an element is a direct member of a list
+member_nested(X, [X|_]).
+member_nested(X, [Head|Tail]) :-
+    (   is_list(Head),
+        member_nested(X, Head)
+    ;   member_nested(X, Tail)
+    ).
+
+% Count occurrences of AList in List
+memCount(_, [], 0).
+
+% Recursive case: AList is the head of the list
+memCount(AList, [AList|Tail], Count) :-
+    memCount(AList, Tail, TailCount),
+    Count is TailCount + 1.
+
+% Recursive case: AList is not the head, but is a member of the head if it's a list
+memCount(AList, [Head|Tail], Count) :-
+    AList \= Head,
+    is_list(Head),
+    member_nested(AList, Head),
+    memCount(AList, Tail, TailCount),
+    Count is TailCount + 1.
+
+% Recursive case: AList is not the head and not a member of the head
+memCount(AList, [Head|Tail], Count) :-
+    AList \= Head,
+    (   \+ is_list(Head)
+    ;   \+ member_nested(AList, Head)
+    ),
+    memCount(AList, Tail, Count).
+
+% Initialization and main entry point for testing
+:- initialization(main).
+main :-
+    memCount(a, [b, a], N1),
+    write('N1 = '), write(N1), nl,
+    memCount(a, [b, [a, a, [a], c], a], N2),
+    write('N2 = '), write(N2), nl,
+    memCount([a], [b, [a, a, [a], c], a], N3),
+    write('N3 = '), write(N3), nl,
+    halt.
+
+```
+### Output
+```bash
+```
