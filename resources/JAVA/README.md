@@ -718,9 +718,10 @@ public class exp8 extends Frame implements ActionListener {
 ### Output:
 ```bash
 PS D:\Github\program-examples\resources\JAVA> javac exp8.java
-PS D:\Github\program-examples\resources\JAVA> java exp8    
-![alt text](image.png)
+PS D:\Github\program-examples\resources\JAVA> java exp8   
 ```
+ 
+![alt text](image.png)
 
 ## 9. Write a Java program that handles all mouse events and shows the event name at the center of the window when a mouse event is fired. [Use Adapter classes]
 
@@ -776,5 +777,7 @@ public void mouseExited(MouseEvent m)
 ```bash
 PS D:\Github\program-examples\resources\JAVA> javac .\exp9.java
 PS D:\Github\program-examples\resources\JAVA> java MouseEventPerformer
-![alt text](image-1.png)
+
+
 ```
+![alt text](image-1.png)
