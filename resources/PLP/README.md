@@ -277,33 +277,33 @@ move(X,Y,Z):-K is X+Y, K<4, Y>0, \+member((K,0),Z),
 ```
 ### Output
 ```bash
-਀?- move(0, 0, []).
+% c:/users/harsh/onedrive/documents/prolog/exp7 compiled 0.00 sec, -2 clauses
+?- move(0,0,[]).
 fill 4 gallon jug
 fill 3 gallon jug
-pour 4 galloon jug
-pour 3 galloon jug
-fill 4 gallon jug
-pour from 4 gallon jug to 3 gallon jug
-pour 3 galloon jug
-pour from 4 gallon jug to 3 gallon jug
-fill 4 gallon jug
-pour from 4 gallon jug to 3 gallon jug
-pour 3 galloon jug
+pour 4 gallon jug
+pour 3 gallon jug
+pour from 3 gallon jug to 4 gallon jug
+fill 3 gallon jug
+pour from 3 gallon jug to 4 gallon jug
+pour 4 gallon jug
+pour 3 gallon jug
+pour from 3 gallon jug to 4 gallon jug
 done
-true .
+true 
 
-?- move(0, 2, []).
+?- move(0,2,[]).
 fill 4 gallon jug
 fill 3 gallon jug
-pour 4 galloon jug
-pour 3 galloon jug
+pour 4 gallon jug
+pour 3 gallon jug
 fill 4 gallon jug
 pour from 4 gallon jug to 3 gallon jug
-pour 3 galloon jug
+pour 3 gallon jug
 pour from 4 gallon jug to 3 gallon jug
 fill 4 gallon jug
 pour from 4 gallon jug to 3 gallon jug
-pour 3 galloon jug
+pour 3 gallon jug
 done
 true .
 ```
@@ -312,16 +312,20 @@ true .
    - Insert as the Nth item.
 ### Source Code: `exp8.pl`[view file](./exp8.pl)
 ```pl
-```
-### Source Code: `exp8.pl`[view file](./exp8.pl)
-```pl
 delte(1,[_|T],T).
 delte(P,[X|Y],[X|R]):-
-P1 is P-1,
-delte(P1,Y,R).
+    P1 is P-1,
+    delte(P1,Y,R).
+
+insert(X, 1, L, [X|L]).
+insert(X, N, [H|T], [H|R]) :-
+    N > 1,
+    N1 is N - 1,
+    insert(X, N1, T, R).
 ```
 ### Output
 ```bash
+% c:/users/harsh/onedrive/documents/prolog/exp8 compiled 0.00 sec, -7 clauses
 ?- delte(4,[1,2,3,4,5,6],R).
 R = [1, 2, 3, 5, 6] .
 
@@ -331,6 +335,14 @@ R = [a, c, d, e] .
 ?- delte(5,[1,2,3,4,5,6],R).
 R = [1, 2, 3, 4, 6] .
 
+?- delete(2, [a, b, c, d],R).
+R = [a, c, d] .
+
+?- insert(x, 3, [a, b, c, d], Result).
+Result = [a, b, x, c, d] .
+
+?- insert(h, 5, [a, b, x, c, d], R).
+R = [a, b, x, c, h, d] .
 ```
 9. Assume the Prolog predicate `gt(A, B)` is true when A is greater than B. Use this predicate to define the predicate `addLeaf(Tree, X, NewTree)` which is true if NewTree is the Tree produced by adding the item X in a leaf node. Tree and NewTree are binary search trees. The empty tree is represented by the atom nil.
 ### Source Code: `exp9.pl`[view file](./exp9.pl)
@@ -383,8 +395,33 @@ show2(t(Left, X, Right), Indent) :-
 ```
 ### Output
 ```bash
+?- in(3, t(t(nil, 1, nil), 2, t(nil, 3, nil))).
+true .
+
+?- add(t(t(nil, 1, nil), 2, t(nil, 3, nil)), 4, NewTree).
+NewTree = t(t(nil, 1, nil), 2, t(nil, 3, t(nil, 4, nil))).
+
+?- show(t(t(nil, 1, nil), 2, t(nil, 3, nil))).
+  3
+2
+  1
+true.
+
+?- add(nil, 5, D1),
+|    add(D1, 3, D2).
+D1 = t(nil, 5, nil),
+D2 = t(t(nil, 3, nil), 5, nil) .
+
+?- add(D2, 8, D3),
+add(D3, 6, D4),
+|    show(D3).|    
+8
+  6
+D2 = nil,
+D3 = t(nil, 8, nil),
+D4 = t(t(nil, 6, nil), 8, nil) .
 ```
-10. Write a Prolog predicate, `countLists(Alist, Ne, Nl)`, using accumulators, that is true when Nl is the number of items that are listed at the top level of Alist and Ne is the number of empty lists. Suggestion: First try to count the lists, or empty lists, then modify by adding the other counter.
+## 10. Write a Prolog predicate, `countLists(Alist, Ne, Nl)`, using accumulators, that is true when Nl is the number of items that are listed at the top level of Alist and Ne is the number of empty lists. Suggestion: First try to count the lists, or empty lists, then modify by adding the other counter.
 ### Source Code: `exp10.pl`[view file](./exp10.pl)
 ```pl
 % Base case: an empty list has 0 empty sublists
@@ -408,8 +445,24 @@ empties(L, N) :-
 ```
 ### Output
 ```bash
+ʹ% c:/users/harsh/onedrive/documents/prolog/exp10 compiled 0.00 sec, -8 clauses
+empties([], 0).
+true .
+
+?- empties([[], [], [1,2], [], [3], []], Count).
+Count = 4 .
+
+?- empties([[], X, [], Y, Z, [[]]], Count).
+X = Y, Y = Z, Z = [],
+Count = 5 .
+
+?- empties([[], [a], [], [b, c], [], [], [d], [], [e, f]], Count).
+Count = 5 .
+
+?- empties([[a, b], [], [c], [], [d, e], [], [], [f], [g], [], [], [h], [], [i, j, k]], Count).
+Count = 7 .
 ```
-11. Define a predicate `memCount(AList,Blist,Count)` that is true if Alist occurs Count times within Blist. Define without using an accumulator. Use "not" as defined in utilities.pro, to make similar cases are unique, or else you may get more than one count as an answer.
+## 11. Define a predicate `memCount(AList,Blist,Count)` that is true if Alist occurs Count times within Blist. Define without using an accumulator. Use "not" as defined in utilities.pro, to make similar cases are unique, or else you may get more than one count as an answer.
     Examples:
 - `memCount(a,[b,a],N)`. N = 1 ;
 - `memCount(a,[b,[a,a,[a],c],a],N)`. N = 4 ;
@@ -433,7 +486,6 @@ memCount(AList, [AList|Tail], Count) :-
     memCount(AList, Tail, TailCount),
     Count is TailCount + 1.
 
-% Recursive case: AList is not the head, but is a member of the head if it's a list
 memCount(AList, [Head|Tail], Count) :-
     AList \= Head,
     is_list(Head),
@@ -463,4 +515,19 @@ main :-
 ```
 ### Output
 ```bash
+% c:/users/harsh/onedrive/documents/prolog/test compiled 0.02 sec, 0 clauses
+?- memCount([b], [b, [a, [b], c], b, [b, b]], Count).
+Count = 3 .
+
+?- member_nested(c, [b, [a, [b], c], d]).
+true .
+
+?- memCount(b, [b, [a, [b], c], d], Count).
+Count = 2 .
+
+?- member_nested(c, [b, [a, a, [a], c], d]).
+true .
+
+?- memCount(a, [b, [a, a, [a], c], d], Count).
+Count = 3 .
 ```
