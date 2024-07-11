@@ -531,3 +531,40 @@ true .
 ?- memCount(a, [b, [a, a, [a], c], d], Count).
 Count = 3 .
 ```
+## Others: Define a predicate memCount(AList, Blist, Count) that is true if Alist occurs Count times within Blist. Define without using an accumulator. Use "not" as defined in utilities.pro, to make similar cases are unique, or else you may get more than one count as an answer.
+### Source Code: `mem.pl`[view file](./mem.pl)
+```pl
+not(Goal) :-
+    \+ call(Goal).
+
+prefix([], _).
+prefix([H|T1], [H|T2]) :-
+    prefix(T1, T2).
+
+memCount(_, [], 0).
+
+memCount(AList, BList, Count) :-
+    prefix(AList, BList),  % AList is a prefix of BList
+    append(AList, Rest, BList),  % Remove the prefix AList from BList to get Rest
+    memCount(AList, Rest, CountRest),
+    Count is CountRest + 1.
+
+memCount(AList, [_|Tail], Count) :-
+    not(prefix(AList, [_|Tail])),  % Ensure AList is not a prefix of the current list
+    memCount(AList, Tail, Count).
+```
+### Output
+```bash
+ᜀ% c:/users/harsh/onedrive/documents/prolog/diff compiled 0.00 sec, -1 clauses
+?- memCount([1,2],[1,2,3,1,2,1,2,4],Count).
+Count = 3 .
+
+?- memCount([1, 2], [1, 3, 4, 1, 2, 1, 2], Count).
+Count = 2 .
+
+?- memCount([1], [1, 1, 1, 1], Count).
+Count = 4 .
+
+?- memCount([2], [1, 3, 4, 5], Count).
+false.
+```
