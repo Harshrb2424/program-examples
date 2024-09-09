@@ -1,5 +1,11 @@
 # program-examples
 
+## 3.1
+
+### (CN) Computer Networks Lab
+
+#### [List of Experiments](./resources/CN/README.md)
+
 ## 2.2
 
 ### (DBMSL) Database Management Systems Lab
