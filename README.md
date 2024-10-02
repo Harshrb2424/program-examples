@@ -2,10 +2,17 @@
 
 ## 3.1
 
+### (ML) Machine Learning Lab
+
+#### [List of Experiments](./resources/ML/README.md)
+
 ### (CN) Computer Networks Lab
 
 #### [List of Experiments](./resources/CN/README.md)
 
+### (UI/UX) Flutter Lab
+
+#### [List of Experiments](./resources/Flutter/README.md)
 ## 2.2
 
 ### (DBMSL) Database Management Systems Lab
