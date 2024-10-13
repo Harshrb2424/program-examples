@@ -353,6 +353,18 @@ predictions = model.predict(X_test)
 # Evaluate the model
 print('Mean Squared Error:', mean_squared_error(y_test, predictions))
 print('Mean Absolute Error:', mean_absolute_error(y_test, predictions))
+
+# Create a scatter plot for actual vs predicted prices
+plt.figure(figsize=(10, 6))
+plt.scatter(y_test, predictions, alpha=0.6, color='blue', label='Predicted Prices')
+plt.plot([y.min(), y.max()], [y.min(), y.max()], 'r--', lw=2, label='Perfect Prediction')  # y = x line
+plt.title('Actual vs Predicted House Prices')
+plt.xlabel('Actual House Prices')
+plt.ylabel('Predicted House Prices')
+plt.legend()
+plt.grid()
+plt.show()
+
 ```
 
 ### Output:
@@ -374,3 +386,6 @@ Index(['X1 transaction date', 'X2 house age',
 Mean Squared Error: 46.211797834927665
 Mean Absolute Error: 5.392293684755756
 ```
+
+![alt text](image-2.png)
+![alt text](image-3.png)
