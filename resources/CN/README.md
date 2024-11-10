@@ -1,4 +1,5 @@
 # 1. Implement Data Link Layer Framing Methods
+
 # Data Link Layer Framing Methods
 
 Framing is a crucial function at the Data Link Layer of the OSI model that deals with how data is encapsulated into frames for transmission across networks. Different framing methods manage how to organize and recognize the boundaries between frames.
@@ -52,6 +53,7 @@ Framed data: STXHELLOETX
 ---
 
 ### 1.2 Character-stuffing Explanation and implementation of character-stuffing in data frames.
+
 - **Character stuffing** is a process used to escape control characters present in the data.
 - Control characters (like `STX`, `ETX`, and `DLE`) are used to signify the start and end of the frame. If the data contains these characters, the system might confuse them with actual control characters.
 - To prevent confusion, an escape character (e.g., **DLE - Data Link Escape**) is inserted before any control character in the data, so the receiver knows it's part of the data, not a framing delimiter.
@@ -177,7 +179,6 @@ Stuffed Bits: 01111110-111110011111010-01111110
 
 # 2. Compute CRC Codes
 
-
 Cyclic Redundancy Check (CRC) is a widely used error-detection method used to detect errors in transmitted data. It involves binary division of the data bits by a predetermined divisor (generator polynomial), and the remainder from this division is appended to the data before transmission. On the receiving side, a similar calculation is performed to check if the remainder matches.
 
 ### 2.1 CRC-12 Explanation and implementation of CRC-12 code computation.
@@ -189,52 +190,109 @@ Cyclic Redundancy Check (CRC) is a widely used error-detection method used to de
 #### Implementation of CRC-12:
 
 ```c
-#include <stdio.h>
-#include <string.h>
-
-#define CRC12_POLY 0x180F  // CRC-12 polynomial: 1100000001111
-
-// Function to compute CRC-12
-unsigned short crc12(char *data) {
-    unsigned short crc = 0;  // 12-bit CRC initialized to 0
-    int i, j;
-    
-    // Process each bit in the data string
-    for (i = 0; i < strlen(data); i++) {
-        crc ^= (data[i] << 4);  // XOR each byte with the CRC register
-
-        // Perform division using the CRC-12 polynomial
-        for (j = 0; j < 8; j++) {
-            if (crc & 0x800) {
-                crc = (crc << 1) ^ CRC12_POLY;  // XOR with the polynomial if MSB is 1
-            } else {
-                crc <<= 1;  // Shift left if MSB is 0
-            }
-        }
-    }
-
-    return crc & 0xFFF;  // Mask to keep only 12 bits
-}
-
-int main() {
-    char data[100];
-    
-    // Input data to be encoded
+#include<stdio.h>
+#include<conio.h>
+int main(void)
+{
+    int data[50],div[16],rem[16];
+    int datalen, divlen, i,j,k;
+    int ch;
+    clrscr();
     printf("Enter the data: ");
-    scanf("%s", data);
-
-    // Compute CRC-12 code
-    unsigned short crc = crc12(data);
-    printf("CRC-12 Code: %03X\n", crc);  // Print as 3-digit hexadecimal
-
+    i = 0;
+    while((ch = fgetc(stdin)) != '\n')
+    {
+        if(ch == '1')
+            data[i] = 1;
+        else
+            data[i] = 0;
+        i++;
+    }
+    datalen = i;
+    printf("\nEnter the divisor: ");
+    i = 0;
+    while((ch = fgetc(stdin)) != '\n')
+    {
+        if(ch == '1')
+            div[i] = 1;
+        else
+            div[i] = 0;
+        i++;
+    }
+    divlen = i;
+    for(i = datalen ; i < datalen + divlen - 1 ; i++)
+        data[i] = 0;
+    datalen = datalen + divlen - 1;
+    for(i = 0 ; i < divlen ; i++)
+        rem[i] = data[i];
+    k = divlen-1;
+    while(k < datalen)
+        if(rem[0] == 1)
+        {
+            for(i = 0 ; i < divlen ; i++)
+                rem[i] = rem[i] ^ div[i];
+        }
+        else
+        {
+            if(k == datalen-1)
+                break;
+            for(i = 0 ; i < divlen-1 ; i++)
+            {
+                rem[i] = rem[i+1];
+                printf("%d",rem[i]);
+            }
+            rem[i] = data[++k];
+            printf("%d\n",rem[i]);
+        }
+    j=1;
+    for(i = datalen - divlen + 1 ; i < datalen ; i++)
+        data[i] = rem[j++];
+    printf("\nThe data to be sent is\n");
+    for(i = 0 ; i < datalen ; i++)
+        printf("%d",data[i]);
+    getch();
     return 0;
-}
+ }
 ```
 
 #### Sample Output:
+
 ```
-Enter the data: 123456
-CRC-12 Code: 345
+Enter the data: 101101
+
+Enter the divisor: 1100000001111
+1110100011110
+0101000100010
+1010001000100
+1100010010110
+0000100110010
+
+The data to be sent is
+101101000100110010
+
+Enter the data: 101101
+
+Enter the divisor: 11000000000000101
+01101000000000000
+11010000000000000
+10100000000000000
+01000000000000000
+10000000000000000
+
+The data to be sent is
+1011010000000000000000
+
+Enter the data: 101101
+
+Enter the divisor: 10001000000100001
+01101000000000000
+11010000000000000
+10100000000000000
+01000000000000000
+10000000000000000
+
+The data to be sent is
+1011010000000000000000
 ```
 
 ---
@@ -291,6 +349,7 @@ int main() {
 ```
 
 #### Sample Output:
+
 ```
 Enter the data: 123456
 CRC-16 Code: A3C5
@@ -350,13 +409,13 @@ int main() {
 ```
 
 #### Sample Output:
+
 ```
 Enter the data: 123456
 CRC-CCITT Code: 29B1
 ```
 
 ---
-
 
 # 3. Develop a Simple Data Link Layer
 
@@ -365,6 +424,7 @@ CRC-CCITT Code: 29B1
 **Sliding Window Protocol** is a flow control mechanism used to manage the amount of data that can be sent before receiving an acknowledgment. It helps ensure that the sender does not overwhelm the receiver with too much data at once. The protocol uses a window size to control the number of frames that can be sent without receiving an acknowledgment.
 
 #### Explanation:
+
 - **Sender**: Maintains a window of unacknowledged frames. As each frame is acknowledged, the window slides to allow new frames to be sent.
 - **Receiver**: Accepts frames within the window size and sends acknowledgments back to the sender.
 
@@ -426,13 +486,14 @@ int main() {
 ```
 
 #### Sample Output:
+
 ```
-Sending frames: 1 2 3 4 
-Acknowledging frames: 1 2 3 4 
-Sending frames: 5 6 7 8 
-Acknowledging frames: 5 6 7 8 
-Sending frames: 9 10 1 2 
-Acknowledging frames: 9 10 1 2 
+Sending frames: 1 2 3 4
+Acknowledging frames: 1 2 3 4
+Sending frames: 5 6 7 8
+Acknowledging frames: 5 6 7 8
+Sending frames: 9 10 1 2
+Acknowledging frames: 9 10 1 2
 ```
 
 ### 3.2 Loss Recovery using the Go-Back-N Mechanism: Loss recovery mechanism with Go-Back-N protocol.
@@ -440,6 +501,7 @@ Acknowledging frames: 9 10 1 2
 **Go-Back-N Protocol** is a mechanism for error recovery in which the sender can send multiple frames before needing an acknowledgment but must go back and retransmit all frames from the last unacknowledged frame if an error is detected.
 
 #### Explanation:
+
 - **Sender**: Sends frames continuously up to a window size and waits for an acknowledgment. If an acknowledgment is not received for a frame, all subsequent frames from that point are retransmitted.
 - **Receiver**: Receives frames and sends an acknowledgment for the last correctly received frame. If an error is detected, it only acknowledges the last correctly received frame.
 
@@ -497,18 +559,19 @@ int main() {
 ```
 
 #### Sample Output:
+
 ```
-Sending frames: 1 2 3 4 
+Sending frames: 1 2 3 4
 Received acknowledgment for frame: 1
 Received acknowledgment for frame: 2
 Received acknowledgment for frame: 3
 Received acknowledgment for frame: 4
-Sending frames: 5 6 7 8 
+Sending frames: 5 6 7 8
 Received acknowledgment for frame: 5
 Received acknowledgment for frame: 6
 Received acknowledgment for frame: 7
 Received acknowledgment for frame: 8
-Sending frames: 9 10 
+Sending frames: 9 10
 Received acknowledgment for frame: 9
 Received acknowledgment for frame: 10
 ```
@@ -520,6 +583,7 @@ Received acknowledgment for frame: 10
 **Dijkstra’s Algorithm** is a famous algorithm used for finding the shortest paths from a source node to all other nodes in a weighted graph. The algorithm works with graphs where weights are non-negative.
 
 #### Explanation:
+
 1. **Initialization**: Start with a source node. Set the distance to the source node as 0 and all other nodes as infinity. Use a priority queue to keep track of the next node with the shortest tentative distance.
 2. **Processing Nodes**: Extract the node with the smallest distance from the priority queue. Update the distances of its neighboring nodes.
 3. **Repeat**: Continue until all nodes have been processed.
@@ -583,7 +647,7 @@ void dijkstra(int graph[V][V], int src) {
 
 int main() {
     // Adjacency matrix representation of the graph
-    int graph[V][V] = { 
+    int graph[V][V] = {
         {0, 4, 0, 0, 0, 0, 0, 8, 0},
         {4, 0, 8, 0, 0, 0, 0, 11, 0},
         {0, 8, 0, 7, 0, 4, 0, 0, 2},
@@ -602,6 +666,7 @@ int main() {
 ```
 
 #### Sample Output:
+
 ```
 Vertex   Distance from Source
 0 	         0
@@ -728,12 +793,14 @@ int main() {
 ```
 
 #### Explanation:
+
 - **Nodes**: Each `Node` represents a host.
 - **Neighbors**: Each node has a list of its direct neighbors.
 - **Tree Construction**: Neighbors are added to create the tree structure.
 - **Printing**: The `printBroadcastTree` function recursively prints the tree structure with indentation to visualize the hierarchy.
 
 #### Sample Output:
+
 ```
 Broadcast Tree:
 Host 1
@@ -750,6 +817,7 @@ Host 1
 **Distance Vector Routing Algorithm** is a routing protocol used to find the shortest path in a network. Each node maintains a table (vector) containing the shortest distance to every other node in the network.
 
 #### Explanation:
+
 1. **Initialization**: Each node initializes its distance vector with direct distances to neighboring nodes.
 2. **Update**: Nodes periodically send their distance vector to their neighbors. On receiving distance vectors from neighbors, nodes update their tables if a shorter path is found.
 3. **Convergence**: The algorithm converges when no further updates are needed.
@@ -820,12 +888,13 @@ int main() {
 ```
 
 #### Sample Output:
+
 ```
 Routing Table:
-From node 0: 0 1 3 6 
-From node 1: 1 0 2 5 
-From node 2: 3 2 0 3 
-From node 3: 6 5 3 0 
+From node 0: 0 1 3 6
+From node 1: 1 0 2 5
+From node 2: 3 2 0 3
+From node 3: 6 5 3 0
 ```
 
 # 7. Implement Data Encryption and Decryption Techniques

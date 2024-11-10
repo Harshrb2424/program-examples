@@ -389,3 +389,126 @@ Mean Absolute Error: 5.392293684755756
 
 ![alt text](image-2.png)
 ![alt text](image-3.png)
+
+
+### 6. Implementation of Decision Tree using sklearn and its Parameters Tuning
+
+### Process:
+
+1. **Import Required Libraries:**
+   You import the necessary libraries like `pandas`, `numpy`, `sklearn`, `matplotlib`, and `seaborn` for data manipulation, model building, and visualization.
+
+2. **Load Dataset:**
+   The Iris dataset is loaded using `load_iris()` from `sklearn.datasets`. This dataset contains data about different species of Iris flowers and their features like petal length, petal width, sepal length, and sepal width.
+
+3. **Prepare Data:**
+   After loading the dataset, the data is converted into a pandas DataFrame, and the target variable (`Species`) is replaced with the actual names of the species.
+
+4. **Separate Features and Target Variables:**
+   The independent features (X) are all the columns except for `Species`, and the target variable (y) is the `Species` column.
+
+5. **Train-Test Split:**
+   The dataset is split into training and testing sets using `train_test_split()` with 70% for training and 30% for testing. The `random_state` is set for reproducibility.
+
+6. **Create Decision Tree Model:**
+   A `DecisionTreeClassifier` model is instantiated, and its hyperparameters such as `max_depth` are specified for controlling the depth of the tree to avoid overfitting.
+
+7. **Train the Model:**
+   The model is trained using the training data (`X_train`, `y_train`).
+
+8. **Tune Hyperparameters:**
+   Hyperparameter tuning is done to optimize the performance of the model. Parameters like `max_depth`, `min_samples_split`, and `min_samples_leaf` are tested to find the best configuration.
+
+9. **Make Predictions:**
+   The trained model is used to predict the target variable (`y_pred`) on the test dataset (`X_test`).
+
+10. **Evaluate the Model:**
+    - The **confusion matrix** is calculated using `metrics.confusion_matrix()`.
+    - The **heatmap** of the confusion matrix is visualized using `seaborn`.
+
+### Code:
+
+```python
+import pandas as pd  
+import numpy as np  
+import matplotlib.pyplot as plt  
+from sklearn import metrics  
+import seaborn as sns  
+from sklearn.datasets import load_iris  
+from sklearn.model_selection import train_test_split, GridSearchCV  
+from sklearn.tree import DecisionTreeClassifier  
+from sklearn import tree  
+
+# Loading the dataset  
+iris = load_iris()  
+
+# Converting the data to a pandas dataframe  
+data = pd.DataFrame(data = iris.data, columns = iris.feature_names)  
+
+# Creating a separate column for the target variable of iris dataset   
+data['Species'] = iris.target  
+
+# Replacing the categories of target variable with the actual names of the species  
+target_dict = dict(zip(np.unique(iris.target), iris.target_names))  
+data['Species'] = data['Species'].replace(target_dict)  
+
+# Separating the independent and dependent variables of the dataset  
+X = data.drop(columns="Species")  
+y = data["Species"]  
+
+# Splitting the dataset into training and testing datasets  
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=93)  
+
+# Creating an instance of the Decision Tree classifier class  
+dtc = DecisionTreeClassifier(random_state=93)  
+
+# Hyperparameter tuning using GridSearchCV
+param_grid = {
+    'max_depth': [2, 3, 4, 5, None],
+    'min_samples_split': [2, 5, 10],
+    'min_samples_leaf': [1, 2, 4]
+}
+
+grid_search = GridSearchCV(dtc, param_grid, cv=5, n_jobs=-1, verbose=1)
+grid_search.fit(X_train, y_train)
+
+# Best parameters from GridSearchCV
+print(f"Best parameters: {grid_search.best_params_}")
+
+# Using the best model found by GridSearchCV
+best_dtc = grid_search.best_estimator_
+
+# Fitting the model with the training data
+best_dtc.fit(X_train, y_train)
+
+# Plotting the Decision Tree with modern colors and a clean look
+plt.figure(figsize=(18, 10))  
+tree.plot_tree(best_dtc, feature_names=X.columns, class_names=y.unique(), rounded=True, filled=True, fontsize=12)  
+plt.title('Optimized Decision Tree Visualization', fontsize=16)  
+plt.show()  
+
+# Predicting with the test data  
+y_pred = best_dtc.predict(X_test)  
+
+# Finding the confusion matrix  
+conf_matrix = metrics.confusion_matrix(y_test, y_pred)  
+conf_matrix_df = pd.DataFrame(conf_matrix, index=y.unique(), columns=y.unique())  
+
+# Plotting the confusion matrix as a heatmap  
+plt.figure(figsize=(8, 6))  
+sns.heatmap(conf_matrix_df, annot=True, fmt="g", cmap="coolwarm", cbar=True, linewidths=1, linecolor='gray')  
+plt.title('Confusion Matrix', fontsize=16)  
+plt.xlabel('Predicted Labels', fontsize=12)  
+plt.ylabel('True Labels', fontsize=12)  
+plt.xticks(rotation=45)  
+plt.yticks(rotation=0)  
+plt.show()  
+```
+
+### Output:
+```
+PS D:\Github\program-examples\resources\ML> python .\6.py
+```
+
+![alt text](image-4.png)
+![alt text](image-5.png)
