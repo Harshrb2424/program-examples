@@ -906,13 +906,190 @@ From node 3: 6 5 3 0
 ### 8.1 Write a Program using the Leaky Bucket Algorithm
 
 - Implementation of the leaky bucket algorithm for congestion control.
+```
+#include<stdio.h> 
+#include<conio.h>
+#define MAX 25 
+#define min(x,y) ((x)<(y)? (x):(y)) 
+int main() 
+{ 
+ int cap, oprt,nsec,cont,i=0,inp[MAX],ch; 
+ clrscr(); 
+ printf("Enter the bucket size:\n"); 
+ scanf("%d",&cap); 
+ printf("Enter the accepted rate:\n"); 
+ scanf("%d",&oprt); 
+ do 
+ { 
+ printf("Enter the number of packets entering at %d seconds: ",i+1); 
+ scanf("%d",&inp[i]); 
+ i++; 
+ printf("Enter 1 to insert packets or 0 to quit\n"); 
+ scanf("%d",&ch); 
+ }while(ch); 
+ 
+ nsec=i; 
+ printf("\n seconds \t packets received \t packets sent \t packets left in bucket\n"); 
+ cont=0; 
+ 
+ for(i = 0; i < nsec; i++) 
+ { 
+ cont += inp[i]; 
+ if(cont > cap) 
+ cont = cap; 
+ printf(" %d ",(i+1)); 
+ printf("\t\t %d ",inp[i]); 
+ printf("\t\t\t\t %d ",min(cont,oprt)); 
+ cont=cont - min(cont,oprt); 
+ printf("\t\t %d \n",cont); 
+ } 
+for( i=0; cont != 0; i++) 
+ { 
+ if(cont > cap) 
+ cont = cap; 
+ printf(" %d ",(i+1)); 
+ printf("\t\t 0 "); 
+ printf("\t\t\t\t %d ",min(cont,oprt)); 
+ cont=cont - min(cont,oprt); 
+ printf("\t\t %d \n",cont); 
+ } 
+ getch();
+ return(0); 
+}
 
+```
+```
+PS D:\Github\program-examples\resources\CN> .\a.exe
+Enter the bucket size:
+50
+Enter the accepted rate:
+12
+Enter the number of packets entering at 1 seconds: 40
+Enter 1 to insert packets or 0 to quit
+1
+Enter the number of packets entering at 2 seconds: 20
+Enter 1 to insert packets or 0 to quit
+0
+
+ seconds         packets received        packets sent    packets left in bucket
+ 1               40                              12              28
+ 2               20                              12              36
+ 1               0                               12              24
+ 2               0                               12              12
+ 3               0                               12              0
+```
 # 9. Frame Sorting Techniques
 
 ### 9.1 Program for Frame Sorting Used in Buffers
 
 - Frame sorting technique implementation in data buffers.
 
+```
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <time.h>
+
+struct frame {
+    int sno;
+    char msg[15];
+    int flag;
+};
+
+int main() {
+    int i, j, n, r, k;
+    clrscr();
+    printf("Enter the number of frames: ");
+    scanf("%d", &n);
+
+    struct frame fr[n];
+    int s[n];
+    for (i = 0; i < n; i++) {
+        s[i] = -1;
+        fr[i].sno = -1;
+    }
+
+    printf("Enter the messages:\n");
+    for (i = 0; i < n; i++) {
+        scanf("%s", fr[i].msg);
+        fr[i].sno = i;
+    }
+
+    srand(time(NULL)); // Seed for randomness
+    for (j = 0; j < n; j++) {
+        r = rand() % n;
+        if (s[r] == -1) {
+            fr[j].flag = r;
+            s[r] = 1;
+        } else {
+            for (k = 0; k < n; k++) {
+                if (s[k] == -1) {
+                    fr[j].flag = k;
+                    s[k] = 1;
+                    break;
+                }
+            }
+        }
+    }
+
+    printf("\nArrived frames are:\n");
+    printf(" sno\tmsg\n");
+    for (i = 0; i < n; i++) {
+        for (j = 0; j < n; j++) {
+            if (fr[j].flag == i) {
+                printf(" %d\t%s\n", fr[j].sno, fr[j].msg);
+            }
+        }
+    }
+
+    // Sort frames by sno
+    for (i = 0; i < n; i++) {
+        for (j = 0; j < n - 1; j++) {
+            if (fr[j].sno > fr[j + 1].sno) {
+                struct frame temp = fr[j];
+                fr[j] = fr[j + 1];
+                fr[j + 1] = temp;
+            }
+        }
+    }
+
+    printf("\nAfter sorting arrived frames are:\n");
+    printf(" sno\tmsg\n");
+    for (i = 0; i < n; i++) {
+        printf(" %d\t%s\n", fr[i].sno, fr[i].msg);
+    }
+    getch();
+    return 0;
+}
+
+```
+
+```
+PS D:\Github\program-examples\resources\CN> .\a.exe
+Enter the number of frames: 5
+Enter the messages:
+welcome
+to 
+the
+class
+room
+
+Arrived frames are:
+ sno    msg
+ 3      class
+ 4      room
+ 2      the
+ 0      welcome
+ 1      to
+
+After sorting arrived frames are:
+ sno    msg
+ 0      welcome
+ 1      to
+ 2      the
+ 3      class
+ 4      room
+```
 # 10. Wireshark
 
 ### 10.1 Packet Capture using Wireshark
