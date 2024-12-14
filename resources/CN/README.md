@@ -1092,58 +1092,694 @@ After sorting arrived frames are:
 ```
 # 10. Wireshark
 
-### 10.1 Packet Capture using Wireshark
+### **10.1 Packet Capture using Wireshark**
 
-- Instructions on capturing packets using Wireshark.
+#### **Aim**:  
+To capture live network packets using Wireshark for analyzing network activity.
 
-### 10.2 Starting Wireshark
+#### **Notes**:  
+1. Open Wireshark.  
+2. Select the network interface to monitor (e.g., Ethernet, Wi-Fi).  
+3. Click the **Start Capturing Packets** button (the blue shark fin icon).  
+4. Wireshark will start capturing all packets on the selected interface in real time.  
+5. Stop the capture by clicking the **Stop Capturing Packets** button (red square icon).
 
-- Steps to start and configure Wireshark.
+- **Captured Data**: Each row represents a captured packet.
+- **Columns**: No., Time, Source, Destination, Protocol, Length, Info.
 
-### 10.3 Viewing Captured Traffic
+#### **Output**:  
+A list of captured packets displayed in a table format with details like source, destination, protocol, and additional information.
 
-- How to view and analyze captured network traffic.
+---
 
-### 10.4 Analysis, Statistics & Filters
+### **10.2 Starting Wireshark**
 
-- Network traffic analysis, statistics, and using filters in Wireshark.
+#### **Aim**:  
+To set up and configure Wireshark for network monitoring.
+
+#### **Notes**:  
+1. Launch Wireshark from your system’s application menu or terminal.  
+2. Select an appropriate **network interface** (Wi-Fi, Ethernet, etc.) for monitoring.  
+3. Configure optional settings:  
+   - **Capture filters** to limit the type of packets captured.  
+   - **File format** and location for saving captures.  
+4. Start the packet capture by selecting the interface and clicking **Start**.
+
+#### **Output**:  
+Wireshark starts capturing packets from the specified network interface.
+
+---
+
+### **10.3 Viewing Captured Traffic**
+
+#### **Aim**:  
+To inspect and analyze the details of captured packets.
+
+#### **Notes**:  
+1. Captured packets are displayed in three panes:
+   - **Packet List**: Displays summary of all packets captured.  
+   - **Packet Details**: Shows hierarchical details of a selected packet (e.g., Ethernet, IP, TCP layers).  
+   - **Packet Bytes**: Displays raw data in hexadecimal format for a selected packet.
+2. Use **time stamps** and **protocol** for filtering and identifying specific traffic.  
+3. Double-click on a packet to expand its details.
+
+#### **Output**:  
+Detailed information about individual packets, including headers and payload.
+
+---
+
+### **10.4 Analysis, Statistics & Filters**
+
+#### **Aim**:  
+To analyze network traffic, generate statistics, and apply filters in Wireshark.
+
+#### **Notes**:  
+1. **Analysis Tools**:  
+   - Use **Follow TCP Stream** to see communication between source and destination.  
+   - Examine packet latency, retransmissions, and throughput.
+2. **Statistics**:  
+   - Access via the **Statistics** menu.  
+   - Includes **IO Graphs**, **Protocol Hierarchy**, and **Conversation Analysis**.
+3. **Filters**:  
+   - **Display Filters**: Refine displayed packets (e.g., `ip.src == 192.168.1.1` or `http`).  
+   - **Capture Filters**: Set before capture to limit the data captured.
+
+#### **Output**:  
+- Clear insights into network behavior.  
+- Filtered view of specific traffic or communication.  
+- Graphical representation of traffic patterns.
+
+---
 
 # 11. Nmap
+### **11.1 How to Run Nmap Scan**
 
-### 11.1 How to Run Nmap Scan
+#### **Aim**:  
+To perform a network scan using Nmap for network discovery and security auditing.
 
-- Running Nmap scan for network discovery and security audits.
+#### **Notes**:  
+1. **Install Nmap**:  
+   - On Linux: `sudo apt install nmap`  
+   - On Windows: Download and install from the official [Nmap site](https://nmap.org/).  
+2. **Basic Commands**:  
+   - Scan a single host: `nmap <IP>`  
+   - Scan a range of IPs: `nmap <IP range>`  
+   - Scan all devices on a subnet: `nmap 192.168.1.0/24`  
+3. **Scan Options**:  
+   - **-sP**: Ping scan to check online hosts.  
+   - **-sS**: SYN scan (stealth scan).  
+   - **-p <port>**: Scan specific ports (e.g., `nmap -p 22 <IP>`).  
+   - **-A**: Comprehensive scan for OS detection, version detection, script scanning, and traceroute.
 
-### 11.2 Operating System Detection using Nmap
+#### **Output**:  
+- A list of active hosts and open ports.  
+- Details include IP address, hostnames, and status of scanned ports.  
+- Example Output:
+  ```
+  Nmap scan report for 192.168.1.1
+  Host is up (0.0010s latency).
+  PORT   STATE SERVICE
+  22/tcp open  ssh
+  80/tcp open  http
+  ```
 
-- Using Nmap for detecting operating systems on a network.
+---
+
+### **11.2 Operating System Detection using Nmap**
+
+#### **Aim**:  
+To detect the operating systems of devices on a network using Nmap.
+
+#### **Notes**:  
+1. Run Nmap with the `-O` flag:  
+   - `nmap -O <IP>`: Detects the OS of a single host.  
+   - `nmap -O 192.168.1.0/24`: Scans all devices on the subnet for OS detection.  
+2. **Additional Flags**:  
+   - **-v**: Increases verbosity for detailed output.  
+   - **--osscan-guess**: Attempts to guess the OS if exact match is unavailable.  
+3. The OS detection works by analyzing packet responses to Nmap probes. Accuracy depends on open ports and network conditions.
+
+#### **Output**:  
+- Detected OS information, including name and version (if available).  
+- Example Output:
+  ```
+  Nmap scan report for 192.168.1.2
+  Host is up (0.0020s latency).
+  PORT   STATE SERVICE
+  22/tcp open  ssh
+  OS: Linux 4.x (98%)
+  ```
+
+--- 
 
 # 12. NS2 Simulator
 
-### 12.1 Introduction to NS2 Simulator
+### **12.1 Introduction to NS2 Simulator**
 
-- Overview of NS2 network simulator.
+#### **Aim**:  
+To understand the basics of NS2 (Network Simulator 2) and its application in simulating network protocols, topologies, and performance analysis.
 
-### 12.2 Simulate to Find the Number of Packets Dropped
+#### **Notes**:  
+1. **What is NS2?**  
+   - NS2 is a discrete event simulator widely used for networking research.  
+   - It supports simulation of wired and wireless network protocols (e.g., TCP, UDP, routing algorithms).  
+   - Written in C++ and uses OTcl (Object Tool Command Language) for simulation scripts.
 
-- Simulation to compute the number of dropped packets in a network.
+2. **Key Features**:  
+   - Simulation of real-world network behavior.  
+   - Support for various network protocols and applications.  
+   - Extensible architecture to add new protocols and modules.  
+   - Visualization using the Network Animator (NAM).
 
-### 12.3 Simulate to Find the Number of Packets Dropped by TCP/UDP
+3. **Components**:  
+   - **C++ Modules**: Handle data processing, packet transmission, and routing logic.  
+   - **OTcl Scripts**: Define network topologies, traffic patterns, and simulation parameters.  
 
-- NS2 simulation to track TCP/UDP packet drops.
+4. **Applications**:  
+   - Testing new network protocols.  
+   - Studying network congestion, routing, and performance metrics.  
+   - Evaluating wireless networks, including MANETs and sensor networks.
 
-### 12.4 Simulate to Find the Number of Packets Dropped Due to Congestion
+5. **How It Works**:  
+   - Define network parameters in an OTcl script.  
+   - NS2 executes the script to simulate network behavior.  
+   - Results are stored in trace files for analysis.  
 
-- Simulation to analyze packet drops due to network congestion.
+#### **Output**:  
+- **Simulation Trace File**: Contains packet-level details of the simulation (e.g., source, destination, event type).  
+- **Network Animator (NAM)**: Provides a graphical visualization of network behavior during the simulation.
 
-### 12.5 Simulate to Compare Data Rate & Throughput
+--- 
+### **12.2 Simulate to Find the Number of Packets Dropped**  
 
-- Simulate and compare data rate and throughput in a network.
+**Objective**:  
+To compute the total number of packets dropped in a network during a simulation using NS2.  
 
-### 12.6 Simulate to Plot Congestion for Different Source/Destination
+**Introduction**:  
+Packet drop in a network occurs when the network fails to deliver data packets to the intended recipient. This could be due to factors such as congestion, buffer overflow, or link failure. In NS2, this metric is vital to evaluate network performance.  
 
-- Plot congestion metrics for various source/destination pairs.
+**Steps to Simulate**:  
+1. **Create Network Topology**:  
+   Define a basic network with nodes, links, and agents. Use the TCL script to set up nodes and define links with bandwidth and delay.  
+   
+2. **Define Traffic Source**:  
+   Attach a traffic generator like Constant Bit Rate (CBR) or FTP to simulate traffic between nodes.  
 
-### 12.7 Simulate to Determine the Performance with Respect to Transmission of Packets
+3. **Add Sink Node**:  
+   Attach a receiving agent (e.g., TCP Sink or Null Agent) to the destination node.  
 
-- Performance evaluation based on packet transmission in a simulated network.
+4. **Enable Trace**:  
+   Add tracing functionality to capture events (e.g., packet drops). Use the `trace-all` command to record network activities.  
+
+5. **Run Simulation**:  
+   Execute the TCL script to start the simulation. Use the `.tr` file generated to analyze results.  
+
+6. **Analyze Results**:  
+   Use AWK scripts or other parsing tools to filter the trace file. Search for "d" events (indicating a packet drop).  
+
+**Sample TCL Script**:  
+```tcl
+# Define the network simulator
+set ns [new Simulator]
+
+# Define nodes
+set n0 [$ns node]
+set n1 [$ns node]
+
+# Define a link
+$ns duplex-link $n0 $n1 10Mb 10ms DropTail
+
+# Attach agents
+set udp [new Agent/UDP]
+$ns attach-agent $n0 $udp
+set null [new Agent/Null]
+$ns attach-agent $n1 $null
+$ns connect $udp $null
+
+# Define CBR traffic
+set cbr [new Application/Traffic/CBR]
+$cbr attach-agent $udp
+$cbr set rate_ 1Mb
+
+# Enable tracing
+set tracefile [open out.tr w]
+$ns trace-all $tracefile
+
+# Run simulation
+$ns at 0.1 "$cbr start"
+$ns at 5.0 "finish"
+proc finish {} {
+    global ns tracefile
+    $ns flush-trace
+    close $tracefile
+    exit 0
+}
+
+$ns run
+```
+
+**Result Analysis**:  
+Use an AWK script to extract packet drops:  
+```awk
+BEGIN { drops = 0 } 
+$1 == "d" { drops++ } 
+END { print "Total Packet Drops: ", drops }
+```  
+
+**Output**:  
+Displays the total number of dropped packets.
+
+---
+
+### **12.3 Simulate to Find the Number of Packets Dropped by TCP/UDP**  
+
+**Objective**:  
+To compute the number of packets dropped separately for TCP and UDP in a network using NS2.  
+
+**Introduction**:  
+TCP and UDP are two common transport protocols. TCP ensures reliable delivery, while UDP is connectionless. Packet drops in these protocols indicate reliability issues in TCP or network limitations for UDP.  
+
+**Steps to Simulate**:  
+1. **Create Topology**:  
+   Define a network with nodes and links.  
+
+2. **Add TCP and UDP Agents**:  
+   Attach TCP and UDP agents to source nodes and their respective sinks (e.g., TCP Sink for TCP and Null Agent for UDP).  
+
+3. **Enable Traffic Sources**:  
+   Define FTP for TCP and CBR for UDP to generate traffic.  
+
+4. **Enable Tracing**:  
+   Use the `trace-all` command and record events in the trace file.  
+
+5. **Run Simulation**:  
+   Execute the script and generate the trace file.  
+
+6. **Analyze Results**:  
+   Use AWK to count packet drops for TCP and UDP by filtering trace lines based on source protocols.  
+
+**Sample TCL Script**:  
+```tcl
+# Define simulator
+set ns [new Simulator]
+
+# Define nodes
+set n0 [$ns node]
+set n1 [$ns node]
+
+# Add links
+$ns duplex-link $n0 $n1 5Mb 10ms DropTail
+
+# TCP configuration
+set tcp [new Agent/TCP]
+$ns attach-agent $n0 $tcp
+set tcpsink [new Agent/TCPSink]
+$ns attach-agent $n1 $tcpsink
+$ns connect $tcp $tcpsink
+set ftp [new Application/FTP]
+$ftp attach-agent $tcp
+$ftp set type_ FTP
+
+# UDP configuration
+set udp [new Agent/UDP]
+$ns attach-agent $n0 $udp
+set null [new Agent/Null]
+$ns attach-agent $n1 $null
+$ns connect $udp $null
+set cbr [new Application/Traffic/CBR]
+$cbr attach-agent $udp
+$cbr set rate_ 1Mb
+
+# Enable tracing
+set tracefile [open out.tr w]
+$ns trace-all $tracefile
+
+# Schedule events
+$ns at 0.1 "$ftp start"
+$ns at 1.0 "$cbr start"
+$ns at 5.0 "finish"
+
+proc finish {} {
+    global ns tracefile
+    $ns flush-trace
+    close $tracefile
+    exit 0
+}
+
+$ns run
+```
+
+**Result Analysis**:  
+Filter TCP and UDP packet drops separately using AWK:  
+```awk
+BEGIN { tcp_drops = 0; udp_drops = 0 } 
+$1 == "d" && $8 == "tcp" { tcp_drops++ } 
+$1 == "d" && $8 == "udp" { udp_drops++ } 
+END { print "TCP Drops: ", tcp_drops; print "UDP Drops: ", udp_drops }
+```  
+
+**Output**:  
+Displays the number of TCP and UDP packet drops.
+
+---
+
+### **12.4 Simulate to Find the Number of Packets Dropped Due to Congestion**  
+
+**Objective**:  
+To compute packet drops caused by congestion in a network using NS2.  
+
+**Introduction**:  
+Congestion occurs when the network capacity is insufficient to handle incoming traffic. This results in packet drops, primarily at queue buffers.  
+
+**Steps to Simulate**:  
+1. **Create Topology**:  
+   Set up a network with multiple traffic sources and a shared link to create congestion.  
+
+2. **Configure Queues**:  
+   Use DropTail or RED (Random Early Detection) queues to simulate congestion.  
+
+3. **Enable Tracing**:  
+   Record events in the trace file to identify drops at congested links.  
+
+4. **Analyze Results**:  
+   Parse trace files to count drops at specific links.  
+
+**Sample TCL Script**:  
+```tcl
+# Define simulator
+set ns [new Simulator]
+
+# Define nodes
+set n0 [$ns node]
+set n1 [$ns node]
+set n2 [$ns node]
+
+# Define links
+$ns duplex-link $n0 $n1 1Mb 10ms DropTail
+$ns duplex-link $n1 $n2 512Kb 20ms DropTail
+
+# Traffic sources
+set udp [new Agent/UDP]
+$ns attach-agent $n0 $udp
+set null [new Agent/Null]
+$ns attach-agent $n2 $null
+$ns connect $udp $null
+set cbr [new Application/Traffic/CBR]
+$cbr attach-agent $udp
+$cbr set rate_ 1Mb
+
+# Enable tracing
+set tracefile [open congestion.tr w]
+$ns trace-all $tracefile
+
+# Schedule events
+$ns at 0.1 "$cbr start"
+$ns at 5.0 "finish"
+
+proc finish {} {
+    global ns tracefile
+    $ns flush-trace
+    close $tracefile
+    exit 0
+}
+
+$ns run
+```
+
+**Result Analysis**:  
+Filter packet drops due to congestion (occurring at the bottleneck link):  
+```awk
+BEGIN { drops = 0 } 
+$1 == "d" && $3 == "link" { drops++ } 
+END { print "Congestion Drops: ", drops }
+```  
+
+**Output**:  
+Displays the number of packets dropped due to congestion.  
+
+### **12.5 Simulate to Compare Data Rate & Throughput**  
+
+**Objective**:  
+To simulate a network using NS2 and compare the data rate and throughput of the network under different scenarios.  
+
+**Introduction**:  
+- **Data Rate**: Refers to the rate at which data is sent across the network, typically measured in bits per second (bps). It is determined by the traffic generator (e.g., CBR, FTP).  
+- **Throughput**: Refers to the amount of successful data delivery over the network, measured in bits per second or packets per second.  
+
+**Steps to Simulate**:  
+1. **Set Up Network Topology**:  
+   Define nodes and links, specifying bandwidth and propagation delay.  
+   
+2. **Attach Traffic Generators**:  
+   - Use CBR for a constant data rate.  
+   - Use FTP (over TCP) to study throughput.  
+
+3. **Enable Tracing**:  
+   Trace packet flow using the `trace-all` command to collect statistics on data sent and received.  
+
+4. **Run Simulation**:  
+   Execute the script and generate a trace file.  
+
+5. **Analyze Results**:  
+   - Use AWK or Python scripts to extract throughput and compare it with the data rate.  
+   - Plot results using tools like GNUPLOT or MATLAB.  
+
+**Sample TCL Script**:  
+```tcl
+# Define simulator
+set ns [new Simulator]
+
+# Define nodes
+set n0 [$ns node]
+set n1 [$ns node]
+
+# Create a link
+$ns duplex-link $n0 $n1 2Mb 10ms DropTail
+
+# Traffic Source 1 (CBR)
+set udp [new Agent/UDP]
+$ns attach-agent $n0 $udp
+set null [new Agent/Null]
+$ns attach-agent $n1 $null
+$ns connect $udp $null
+set cbr [new Application/Traffic/CBR]
+$cbr attach-agent $udp
+$cbr set rate_ 1Mb
+
+# Traffic Source 2 (FTP)
+set tcp [new Agent/TCP]
+$ns attach-agent $n0 $tcp
+set tcpsink [new Agent/TCPSink]
+$ns attach-agent $n1 $tcpsink
+$ns connect $tcp $tcpsink
+set ftp [new Application/FTP]
+$ftp attach-agent $tcp
+
+# Enable tracing
+set tracefile [open rate_throughput.tr w]
+$ns trace-all $tracefile
+
+# Schedule events
+$ns at 0.1 "$cbr start"
+$ns at 1.0 "$ftp start"
+$ns at 5.0 "finish"
+
+proc finish {} {
+    global ns tracefile
+    $ns flush-trace
+    close $tracefile
+    exit 0
+}
+
+$ns run
+```
+
+**Result Analysis**:  
+Use AWK to calculate throughput:  
+```awk
+BEGIN { sent = 0; received = 0 }
+$1 == "+" { sent += $11 }  
+$1 == "r" { received += $11 }  
+END { 
+    print "Data Rate: ", sent / 5, "bps";
+    print "Throughput: ", received / 5, "bps";
+}
+```  
+
+**Output**:  
+Displays and compares data rate and throughput.
+
+---
+
+### **12.6 Simulate to Plot Congestion for Different Source/Destination**  
+
+**Objective**:  
+To plot congestion metrics for different source and destination pairs in a network.  
+
+**Introduction**:  
+Congestion in a network occurs when multiple traffic flows compete for limited resources (e.g., bandwidth). By simulating different source/destination pairs, congestion trends can be observed and visualized.  
+
+**Steps to Simulate**:  
+1. **Set Up Topology**:  
+   Define nodes and links, ensuring a bottleneck link to simulate congestion.  
+
+2. **Add Multiple Traffic Sources**:  
+   Attach traffic sources to simulate different source/destination pairs.  
+
+3. **Enable Tracing**:  
+   Use the `trace-all` command to record packet events (sent, received, dropped) for analysis.  
+
+4. **Analyze Congestion**:  
+   Parse trace files to extract drop events for each source/destination pair.  
+
+5. **Plot Results**:  
+   Use GNUPLOT, Python (matplotlib), or Excel to visualize congestion levels.  
+
+**Sample TCL Script**:  
+```tcl
+# Define simulator
+set ns [new Simulator]
+
+# Define nodes
+set n0 [$ns node]
+set n1 [$ns node]
+set n2 [$ns node]
+set n3 [$ns node]
+
+# Create links
+$ns duplex-link $n0 $n1 1Mb 10ms DropTail
+$ns duplex-link $n2 $n1 1Mb 10ms DropTail
+$ns duplex-link $n1 $n3 512Kb 20ms DropTail
+
+# Traffic Source 1
+set udp1 [new Agent/UDP]
+$ns attach-agent $n0 $udp1
+set null1 [new Agent/Null]
+$ns attach-agent $n3 $null1
+$ns connect $udp1 $null1
+set cbr1 [new Application/Traffic/CBR]
+$cbr1 attach-agent $udp1
+$cbr1 set rate_ 500Kb
+
+# Traffic Source 2
+set udp2 [new Agent/UDP]
+$ns attach-agent $n2 $udp2
+set null2 [new Agent/Null]
+$ns attach-agent $n3 $null2
+$ns connect $udp2 $null2
+set cbr2 [new Application/Traffic/CBR]
+$cbr2 attach-agent $udp2
+$cbr2 set rate_ 500Kb
+
+# Enable tracing
+set tracefile [open congestion_plot.tr w]
+$ns trace-all $tracefile
+
+# Schedule events
+$ns at 0.1 "$cbr1 start"
+$ns at 0.2 "$cbr2 start"
+$ns at 5.0 "finish"
+
+proc finish {} {
+    global ns tracefile
+    $ns flush-trace
+    close $tracefile
+    exit 0
+}
+
+$ns run
+```
+
+**Result Analysis**:  
+Extract congestion metrics for each pair:  
+```awk
+BEGIN { drops1 = 0; drops2 = 0 } 
+$1 == "d" && $3 == "link" && $2 == "n0->n3" { drops1++ }
+$1 == "d" && $3 == "link" && $2 == "n2->n3" { drops2++ }
+END { 
+    print "Congestion for n0->n3: ", drops1;
+    print "Congestion for n2->n3: ", drops2;
+}
+```  
+
+**Plot Congestion**:  
+- Use GNUPLOT to create a bar chart comparing congestion levels.
+
+---
+
+### **12.7 Simulate to Determine the Performance with Respect to Transmission of Packets**  
+
+**Objective**:  
+To evaluate network performance based on packet transmission metrics, such as throughput, latency, and packet loss.  
+
+**Introduction**:  
+Packet transmission performance is a key indicator of network reliability. It is influenced by bandwidth, congestion, and protocol behavior.  
+
+**Steps to Simulate**:  
+1. **Create Network Topology**:  
+   Define a topology with nodes and links.  
+
+2. **Add Traffic Generators**:  
+   Attach agents (e.g., UDP, TCP) and define traffic flows.  
+
+3. **Enable Metrics Collection**:  
+   Trace sent, received, and dropped packets.  
+
+4. **Analyze Performance**:  
+   Compute metrics such as throughput, packet loss ratio, and average delay.  
+
+**Sample TCL Script**:  
+```tcl
+# Define simulator
+set ns [new Simulator]
+
+# Define nodes
+set n0 [$ns node]
+set n1 [$ns node]
+
+# Create link
+$ns duplex-link $n0 $n1 2Mb 10ms DropTail
+
+# Traffic Source
+set tcp [new Agent/TCP]
+$ns attach-agent $n0 $tcp
+set tcpsink [new Agent/TCPSink]
+$ns attach-agent $n1 $tcpsink
+$ns connect $tcp $tcpsink
+
+# Enable tracing
+set tracefile [open performance.tr w]
+$ns trace-all $tracefile
+
+# Schedule events
+$ns at 0.1 "$tcp send"
+$ns at 5.0 "finish"
+
+proc finish {} {
+    global ns tracefile
+    $ns flush-trace
+    close $tracefile
+    exit 0
+}
+
+$ns run
+```
+
+**Result Analysis**:  
+Calculate performance metrics:  
+- **Throughput**:  
+  ```awk
+  BEGIN { received = 0 } 
+  $1 == "r" { received += $11 }
+  END { print "Throughput: ", received / 5, "bps" }
+  ```  
+- **Packet Loss**:  
+  ```awk
+  BEGIN { sent = 0; received = 0 } 
+  $1 == "+" { sent++ } 
+  $1 == "r" { received++ } 
+  END { print "Packet Loss Ratio: ", (sent - received) / sent }
+  ```  
+
+**Output**:  
+Displays network performance metrics for packet transmission.
