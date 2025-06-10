@@ -1,5 +1,13 @@
 # program-examples
 
+## 3.2
+
+### (DAL) DA Lab
+
+#### [V1](./resources/DA/1.md)
+
+### (NLPL) NLP Lab
+
 ## 3.1
 
 ### (ML) Machine Learning Lab
