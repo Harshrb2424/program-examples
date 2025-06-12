@@ -8,6 +8,12 @@
 
 ### (NLPL) NLP Lab
 
+#### [V2](./resources/DA/s1.md)
+#### [Q5](./resources/DA/5.md)
+#### [Q6](./resources/DA/6.md)
+#### [Q7](./resources/DA/7.md)
+#### [Q8](./resources/DA/8.md)
+
 ## 3.1
 
 ### (ML) Machine Learning Lab
