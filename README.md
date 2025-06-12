@@ -8,11 +8,11 @@
 
 ### (NLPL) NLP Lab
 
-#### [V2](./resources/DA/s1.md)
-#### [Q5](./resources/DA/5.md)
-#### [Q6](./resources/DA/6.md)
-#### [Q7](./resources/DA/7.md)
-#### [Q8](./resources/DA/8.md)
+#### [V2](./resources/NLP/s1.md)
+#### [Q5](./resources/NLP/5.md)
+#### [Q6](./resources/NLP/6.md)
+#### [Q7](./resources/NLP/7.md)
+#### [Q8](./resources/NLP/8.md)
 
 ## 3.1
 
