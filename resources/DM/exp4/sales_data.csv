@@ -1,0 +1,9 @@
+Product,Region,Year,Quarter,Sales
+Laptop,East,2023,Q1,1000
+Laptop,West,2023,Q1,800
+Laptop,East,2024,Q2,1200
+Tablet,West,2023,Q3,600
+Tablet,East,2024,Q4,900
+Phone,East,2023,Q1,400
+Phone,West,2023,Q2,700
+Phone,West,2024,Q3,500
