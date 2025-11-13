@@ -1,7 +1,7 @@
 # program-examples
 ## 4.1
-#### [DM 9 - 1](./resources/DM/Exp 9 - 16.md)
-#### [DM 5-8](./resources/DM/Exp 5-8.md)
+#### [DM 9-16](./resources/DM/Exp%209%20-%2016.md)
+#### [DM 5-8](./resources/DM/5-8.md)
 
 ## 3.2
 
