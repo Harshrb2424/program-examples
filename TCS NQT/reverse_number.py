@@ -5,5 +5,9 @@ def rev(n):
         n = n // 10
     return r
 
+def rev_string(n):
+    return str(n)[::-1]
+
 print(rev(int(input())))
-        
+print(rev_string(int(input())))
+    
